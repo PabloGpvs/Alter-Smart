@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SmartHome Delivery // TERMINAL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="toast" role="status"></div>
+
+<main id="auth">
+  <div class="panel boot">
+    <h1 class="logo">SMARTHOME<span>_DELIVERY</span></h1>
+    <p class="muted">&gt; SISTEMA DE CONTROLE RESIDENCIAL v1.0<br>&gt; IDENTIFIQUE-SE PARA ACESSAR A RESIDÊNCIA<span class="cursor">█</span></p>
+    <div class="tabs"><button class="on" data-auth="login">Entrar</button><button data-auth="register">Cadastrar</button></div>
+    <form id="f-login">
+      <label>E-mail<input name="email" type="email" required></label>
+      <label>Senha<input name="senha" type="password" required></label>
+      <button class="btn" type="submit">Acessar sistema</button>
+    </form>
+    <form id="f-register" hidden>
+      <label>Nome<input name="nome" required></label>
+      <label>E-mail<input name="email" type="email" required></label>
+      <label>Senha (mín. 4)<input name="senha" type="password" minlength="4" required></label>
+      <button class="btn pink" type="submit">Criar conta</button>
+    </form>
+  </div>
+</main>
+
+<div id="app" hidden>
+  <header>
+    <h1 class="logo small">SMARTHOME<span>_DELIVERY</span></h1>
+    <div><span id="who" class="cyan"></span> <button class="btn ghost" id="logout">Sair</button></div>
+  </header>
+  <div id="alerta" class="alert" hidden></div>
+  <nav class="tabs" id="nav">
+    <button class="on" data-tab="pedidos">Pedidos</button>
+    <button data-tab="servicos">Serviços</button>
+    <button data-tab="estoque">Estoque</button>
+    <button data-tab="automacao">Automação</button>
+    <button data-tab="casa">Casa</button>
+    <button data-tab="historico">Histórico</button>
+  </nav>
+
+  <section id="tab-pedidos" class="tab">
+    <form class="panel row" data-ep="pedidos">
+      <h2>Novo pedido de serviço</h2>
+      <input type="hidden" name="id">
+      <label>Serviço<select name="servico_id" data-src="servicos" data-lbl="titulo" required></select></label>
+      <label>Ambiente<select name="ambiente_id" data-src="ambientes" data-lbl="nome"></select></label>
+      <label>Observação<input name="observacao" placeholder="Ex.: vazamento perto da pia"></label>
+      <button class="btn" type="submit">Solicitar</button>
+    </form>
+    <div id="lista-pedidos" class="grid"></div>
+  </section>
+
+  <section id="tab-servicos" class="tab" hidden>
+    <form class="panel row" data-ep="servicos">
+      <h2>Catálogo de serviços</h2>
+      <input type="hidden" name="id">
+      <label>Título<input name="titulo" required></label>
+      <label>Descrição<input name="descricao"></label>
+      <label>Preço estimado (R$)<input name="preco_estimado" type="number" step="0.01" min="0" value="0"></label>
+      <button class="btn" type="submit">Salvar</button>
+    </form>
+    <div id="lista-servicos" class="grid"></div>
+  </section>
+
+  <section id="tab-estoque" class="tab" hidden>
+    <form class="panel row" data-ep="produtos">
+      <h2>Produtos da casa</h2>
+      <input type="hidden" name="id">
+      <label>Produto<input name="nome" required placeholder="Detergente"></label>
+      <label>Quantidade atual<input name="quantidade" type="number" min="0" value="1"></label>
+      <label>Quantidade mínima<input name="quantidade_minima" type="number" min="0" value="1"></label>
+      <button class="btn" type="submit">Salvar</button>
+    </form>
+    <div id="lista-produtos" class="grid"></div>
+  </section>
+
+  <section id="tab-automacao" class="tab" hidden>
+    <form class="panel row" data-ep="dispositivos">
+      <h2>Dispositivos</h2>
+      <input type="hidden" name="id">
+      <label>Nome<input name="nome" required placeholder="Luz do teto"></label>
+      <label>Tipo<select name="tipo"><option>luz</option><option>ar-condicionado</option><option>persiana</option><option>seguranca</option></select></label>
+      <label>Ambiente<select name="ambiente_id" data-src="ambientes" data-lbl="nome"></select></label>
+      <label>Estado<input name="estado" value="desligado"></label>
+      <button class="btn" type="submit">Salvar</button>
+    </form>
+    <div id="lista-dispositivos" class="grid"></div>
+    <form class="panel row" data-ep="rotinas">
+      <h2>Rotinas</h2>
+      <input type="hidden" name="id">
+      <label>Nome<input name="nome" required placeholder="Vou dormir"></label>
+      <label>Descrição<input name="descricao"></label>
+      <button class="btn pink" type="submit">Salvar rotina</button>
+    </form>
+    <div id="lista-rotinas" class="grid"></div>
+  </section>
+
+  <section id="tab-casa" class="tab" hidden>
+    <form class="panel row" data-ep="enderecos">
+      <h2>Endereços</h2>
+      <input type="hidden" name="id">
+      <label>Rua<input name="rua" required></label>
+      <label>Número<input name="numero" required></label>
+      <button class="btn" type="submit">Salvar</button>
+    </form>
+    <div id="lista-enderecos" class="grid"></div>
+    <form class="panel row" data-ep="ambientes">
+      <h2>Ambientes</h2>
+      <input type="hidden" name="id">
+      <label>Nome<input name="nome" required></label>
+      <button class="btn" type="submit">Salvar</button>
+    </form>
+    <div id="lista-ambientes" class="grid"></div>
+  </section>
+
+  <section id="tab-historico" class="tab" hidden>
+    <div class="panel row"><h2>Log de transações</h2><button class="btn ghost" onclick="limparHist()">Limpar histórico</button></div>
+    <div id="lista-historico" class="log"></div>
+  </section>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+COMO USAR
+1) Instale o Node.js (LTS) em nodejs.org
+2) Extraia este zip inteiro (botão direito > Extrair tudo)
+3) Para editar no VS Code: dê dois cliques em "smarthome-delivery.code-workspace"
+4) Para rodar: dois cliques em "iniciar.bat" (instala o Express na primeira vez e abre o navegador)
+   Ou, no terminal do VS Code (Ctrl + '): npm install  e depois  npm start
+5) Acesse http://localhost:3000
+
+6) Requer Node.js 22.13 ou mais novo (o banco SQLite ja vem dentro do Node, nao precisa de Python nem compilador).
+7) Se a pasta estiver no OneDrive/Area de Trabalho e der erro de permissao, mova para C:\\projetos\\
