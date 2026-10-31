@@ -1,7 +1,7 @@
 COMO USAR
 1) Instale o Node.js (LTS) em nodejs.org
 2) Extraia este zip inteiro (botão direito > Extrair tudo)
-3) Para editar no VS Code: dê dois cliques em "smarthome-delivery.code-workspace"
+3) Para editar no VS Code: dê dois cliques em "alter-smart.code-workspace"
 4) Para rodar: dois cliques em "iniciar.bat" (instala o Express na primeira vez e abre o navegador)
    Ou, no terminal do VS Code (Ctrl + '): npm install  e depois  npm start
 5) Acesse http://localhost:3000

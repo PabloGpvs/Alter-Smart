@@ -206,4 +206,4 @@ api.use((q, s) => erro(s, 404, 'Rota não encontrada.'));
 app.use((e, q, s, n) => erro(s, 400, e.message));
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`▶ SmartHome Delivery online em http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`▶ Alter Smart online em http://localhost:${PORT}`));
