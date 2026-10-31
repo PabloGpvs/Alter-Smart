@@ -1,4 +1,4 @@
-# SmartHome Delivery
+# Alter Smart
 Requisitos: Node.js 18+ (testado com 20/22).
 ```
 npm install
