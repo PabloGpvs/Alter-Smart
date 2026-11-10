@@ -58,15 +58,26 @@ sistema já usa em software:
 | `04_termostato.circ` | Termostato do ar (ligado à termodinâmica) | COMPRESSOR = (T>SET)·PRESENCA · NO_ALVO = (T=SET) | Comparador de 5 bits (0–31 °C), AND |
 | `05_status_pedido.circ` | Fluxo do pedido 00 Solicitado → 01 Aceito → 10 Em andamento → 11 Concluído (só avança, igual à API) | INC = AVANCAR·¬(S1·S0) · N0 = S0⊕INC · N1 = S1⊕(S0·INC) + decodificador 2→4 | AND, NOT, XOR, decodificador com portas |
 
+| `06_maquina_pedido.circ` | O mesmo fluxo do pedido, agora **sequencial**: cada pulso de clock avança um passo | 2 **D Flip-Flops** guardam S1 e S0; próximo estado: INC = ¬(S1·S0), N0 = S0⊕INC, N1 = S1⊕(S0·INC); RESET volta para 00 | Flip-flop D, AND, NOT, XOR, decodificador |
+| **`00_ALTER_SMART_COMPLETO.circ`** | **O projeto inteiro em um arquivo**: um painel (`main`) com os circuitos 01 a 04 e 06 como **subcircuitos (blocos)**, chaves de entrada, LEDs e os botões **AVANCAR** e **RESET** | Hierarquia de subcircuitos com aparência própria | Subcircuitos, Button, LED |
+
+### Como apresentar no Logisim
+1. Abra o **`00_ALTER_SMART_COMPLETO.circ`** (Arquivo → Abrir).
+2. Selecione a ferramenta **Cutucar** (a mãozinha, primeiro ícone da barra).
+3. Clique nas chaves da esquerda (0 → 1) e veja os LEDs da direita mudarem:
+   - **Luz:** PRESENCA=1 e ESCURO=1 acendem a LUZ. Com MANUAL=1 ela acende sempre.
+   - **Alarme:** ARMADO=1 e PORTA=1 disparam a SIRENE. Com ARMADO=0 e uma janela aberta, acende AVISO_ABERTA.
+   - **Estoque:** QTD e MIN ficam em binário (clique em cada bit). Com QTD ≤ MIN, acende BAIXO.
+   - **Termostato:** T e SET ficam em binário (°C). Com T > SET e PRESENCA_AR=1, liga o COMPRESSOR.
+4. No bloco do pedido, aperte **AVANCAR**. O LED passa de SOLICITADO para ACEITO, depois EM ANDAMENTO e CONCLUÍDO, e para no último. **RESET** volta ao início.
+5. Para mostrar um circuito por dentro, dê dois cliques no bloco (ou escolha o circuito na lista da esquerda). Para voltar, clique em `main`.
+6. Em **Projeto → Analisar circuito**, o Logisim mostra a tabela-verdade e a expressão de cada bloco combinacional.
+
 Na aba **Laboratório → Eletrônica**:
 - Cada cartão simula o mesmo circuito, com tabela-verdade e link para baixar o `.circ`.
 - *Aplicar na luz / no alarme / no ar* grava o resultado do circuito no dispositivo real.
 - *Dados reais da casa* passa os produtos do estoque pelo circuito 03 (em binário) e mostra os
   pedidos como S1S0. O botão **Avançar pelo circuito** usa N1N0 para mudar o status do pedido.
-
-**Ideia para ir além:** no circuito 05, ligue N1 e N0 a dois *D Flip-Flops* (biblioteca Memória)
-alimentados por um *Clock* ou *Botão*. A saída dos flip-flops volta para S1 e S0, e você tem a
-máquina de estados completa, que avança um passo a cada pulso.
 
 ### Conferência automática
 Os `.circ` são gerados por `logisim/gerar_circuitos.py`. O script `logisim/verificar_circuitos.py`
@@ -75,13 +86,18 @@ as combinações de entrada com a regra esperada:
 
 ```
 python3 logisim/gerar_circuitos.py
-python3 logisim/verificar_circuitos.py caminho/logisim-evolution-4.1.0-all.jar
-OK   01_luz_automatica.circ: 8 combinações testadas, 0 divergências
-OK   02_alarme_seguranca.circ: 16 combinações testadas, 0 divergências
-OK   03_alerta_estoque.circ: 256 combinações testadas, 0 divergências
-OK   04_termostato.circ: 2048 combinações testadas, 0 divergências
-OK   05_status_pedido.circ: 8 combinações testadas, 0 divergências
+xvfb-run python3 logisim/verificar_circuitos.py caminho/logisim-evolution-4.1.0-all.jar
+OK   01_luz_automatica.circ: 8 combinações, 0 divergências
+OK   02_alarme_seguranca.circ: 16 combinações, 0 divergências
+OK   03_alerta_estoque.circ: 256 combinações, 0 divergências
+OK   04_termostato.circ: 2048 combinações, 0 divergências
+OK   05_status_pedido.circ: 8 combinações, 0 divergências
+OK   00_ALTER_SMART_COMPLETO.circ [cada bloco]: as mesmas combinações, 0 divergências
+OK   06_maquina_pedido.circ (sequência de clock): 12 vetores — Passed: 12, Failed: 0
+OK   00_ALTER_SMART_COMPLETO.circ [maquina_pedido]: 12 vetores — Passed: 12, Failed: 0
+OK   00_ALTER_SMART_COMPLETO.circ [painel main]: 400 vetores — Passed: 400, Failed: 0
 ```
+O botão AVANCAR do painel também foi testado clicando nele dentro do próprio Logisim.
 
 ---
 
