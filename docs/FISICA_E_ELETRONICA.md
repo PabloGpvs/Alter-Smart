@@ -1,7 +1,12 @@
 # Alter Smart — Física e Eletrônica
 
 O Alter Smart controla uma casa: luzes, ar-condicionado, alarme, estoque e pedidos de serviço.
-A aba **Laboratório** mostra a física que faz cada um desses dispositivos funcionar. A pasta
+A física que faz cada aparelho funcionar aparece em dois níveis:
+
+- **❓ Como funciona** (menu principal, para o morador): cada assunto vira uma pergunta do dia a dia, uma resposta curta e botões grandes para ver acontecer, sem fórmulas e sem campos para preencher.
+- **🔧 Área técnica** (botão no rodapé, para cuidadores, técnicos e professores): os simuladores completos, com fórmulas, gráficos e os circuitos. Cada cartão do "Como funciona" tem um botão "Ver detalhes técnicos" que abre a parte correspondente.
+
+A pasta
 **`logisim/`** traz os circuitos digitais que tomam as decisões da casa, feitos para o
 **Logisim-evolution v4.1.0**.
 
@@ -15,10 +20,10 @@ tabela `experimentos`).
 
 | Conteúdo | Dispositivo da casa | Onde no sistema | Fórmulas usadas |
 |---|---|---|---|
-| **Campo elétrico** | Purificador de ar eletrostático (as placas carregadas prendem a poeira) | Laboratório → *Campo elétrico* | E = k·q/r² (com superposição Σ), V = k·q/r, F = q·E, desenho das linhas de campo e das equipotenciais |
-| **Eletrostática** | Botão touch do painel (sensor capacitivo) | Laboratório → *Eletrostática* | Lei de Coulomb F = k·q₁q₂/r², C = ε₀εᵣA/d, Q = C·V, U = ½CV², E = V/d, σ = Q/A |
-| **Magnetismo** | Relé que liga a luz ou o ar + fio da tomada + sensor de porta com ímã | Laboratório → *Magnetismo* | B = μ₀μᵣNI/L (solenoide), F = B²A/2μ₀ (força que puxa a armadura), B = μ₀I/2πr (fio reto, regra da mão direita), Φ = B·A, ε = N·ΔΦ/Δt (Faraday) |
-| **Termodinâmica** | Ar-condicionado de cada ambiente | Laboratório → *Termodinâmica* | 1ª lei: C·dT/dt = UA(Tₑₓₜ−T) + Q_int − Q_ar · Q = m·c·ΔT · máquina térmica reversa: Q_q = Q_f + W, COP = Q_f/W · 2ª lei: COP ≤ COP_Carnot = T_f/(T_q−T_f) · energia (kWh) e custo (R$) |
+| **Campo elétrico** | Purificador de ar eletrostático (as placas carregadas prendem a poeira) | Área técnica → *Campo elétrico* | E = k·q/r² (com superposição Σ), V = k·q/r, F = q·E, desenho das linhas de campo e das equipotenciais |
+| **Eletrostática** | Botão touch do painel (sensor capacitivo) | Área técnica → *Eletrostática* | Lei de Coulomb F = k·q₁q₂/r², C = ε₀εᵣA/d, Q = C·V, U = ½CV², E = V/d, σ = Q/A |
+| **Magnetismo** | Relé que liga a luz ou o ar + fio da tomada + sensor de porta com ímã | Área técnica → *Magnetismo* | B = μ₀μᵣNI/L (solenoide), F = B²A/2μ₀ (força que puxa a armadura), B = μ₀I/2πr (fio reto, regra da mão direita), Φ = B·A, ε = N·ΔΦ/Δt (Faraday) |
+| **Termodinâmica** | Ar-condicionado de cada ambiente | Área técnica → *Termodinâmica* | 1ª lei: C·dT/dt = UA(Tₑₓₜ−T) + Q_int − Q_ar · Q = m·c·ΔT · máquina térmica reversa: Q_q = Q_f + W, COP = Q_f/W · 2ª lei: COP ≤ COP_Carnot = T_f/(T_q−T_f) · energia (kWh) e custo (R$) |
 
 ### Como cada simulador conversa com a casa
 - **Eletrostática:** escolha uma luz e clique em *Tocar no painel*. Se a variação de capacitância
@@ -73,7 +78,7 @@ sistema já usa em software:
 5. Para mostrar um circuito por dentro, dê dois cliques no bloco (ou escolha o circuito na lista da esquerda). Para voltar, clique em `main`.
 6. Em **Projeto → Analisar circuito**, o Logisim mostra a tabela-verdade e a expressão de cada bloco combinacional.
 
-Na aba **Laboratório → Eletrônica**:
+Na **Área técnica → Eletrônica**:
 - Cada cartão simula o mesmo circuito, com tabela-verdade e link para baixar o `.circ`.
 - *Aplicar na luz / no alarme / no ar* grava o resultado do circuito no dispositivo real.
 - *Dados reais da casa* passa os produtos do estoque pelo circuito 03 (em binário) e mostra os
@@ -105,7 +110,8 @@ O botão AVANCAR do painel também foi testado clicando nele dentro do próprio 
 
 - `public/fisica.js` — núcleo de cálculo (campo elétrico, eletrostática, magnetismo, termodinâmica e
   o espelho lógico dos 5 circuitos). Funciona no navegador e no Node.
-- `public/lab.js` — aba Laboratório: desenhos em canvas, gráfico da temperatura, cartões dos
+- `public/como.js` — tela Como funciona (versão simples para o morador).
+- `public/lab.js` — Área técnica: desenhos em canvas, gráfico da temperatura, cartões dos
   circuitos e integração com os dispositivos.
 - `server.js` — nova tabela `experimentos` e novas rotas:
   - `POST /api/fisica/:area` — calcula no servidor e salva o experimento
