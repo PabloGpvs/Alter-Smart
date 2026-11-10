@@ -52,8 +52,8 @@
     <tool lib="4" name="Register"/>
   </toolbar>
   <circuit name="main">
-    <a name="appearance" val="logisim_evolution"/>
     <a name="circuit" val="main"/>
+    <a name="appearance" val="logisim_evolution"/>
     <comp lib="8" loc="(100,30)" name="Text">
       <a name="text" val="ALTER SMART // 05 - STATUS DO PEDIDO (logica de proximo estado + decodificador)"/>
       <a name="font" val="SansSerif bold 18"/>

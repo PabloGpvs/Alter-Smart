@@ -1,0 +1,1351 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project source="4.1.0" version="1.0">
+  This file is intended to be loaded by Logisim-evolution v4.1.0(https://github.com/logisim-evolution/).
+
+  <lib desc="#Wiring" name="0">
+    <tool name="Pin">
+      <a name="appearance" val="classic"/>
+    </tool>
+  </lib>
+  <lib desc="#Gates" name="1"/>
+  <lib desc="#Plexers" name="2"/>
+  <lib desc="#Arithmetic" name="3"/>
+  <lib desc="#Memory" name="4"/>
+  <lib desc="#I/O" name="5"/>
+  <lib desc="#TTL" name="6"/>
+  <lib desc="#TCL" name="7"/>
+  <lib desc="#Base" name="8"/>
+  <lib desc="#BFH-Praktika" name="9"/>
+  <lib desc="#Input/Output-Extra" name="10"/>
+  <lib desc="#Soc" name="11"/>
+  <main name="main"/>
+  <options>
+    <a name="gateUndefined" val="ignore"/>
+    <a name="simlimit" val="1000"/>
+    <a name="simrand" val="0"/>
+  </options>
+  <mappings>
+    <tool lib="8" map="Button2" name="Poke Tool"/>
+    <tool lib="8" map="Button3" name="Menu Tool"/>
+    <tool lib="8" map="Ctrl Button1" name="Menu Tool"/>
+  </mappings>
+  <toolbar>
+    <tool lib="8" name="Poke Tool"/>
+    <tool lib="8" name="Edit Tool"/>
+    <tool lib="8" name="Wiring Tool"/>
+    <tool lib="8" name="Text Tool"/>
+    <sep/>
+    <tool lib="0" name="Pin"/>
+    <tool lib="0" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+    </tool>
+    <sep/>
+    <tool lib="1" name="NOT Gate"/>
+    <tool lib="1" name="AND Gate"/>
+    <tool lib="1" name="OR Gate"/>
+    <tool lib="1" name="XOR Gate"/>
+    <tool lib="1" name="NAND Gate"/>
+    <tool lib="1" name="NOR Gate"/>
+    <sep/>
+    <tool lib="4" name="D Flip-Flop"/>
+    <tool lib="4" name="Register"/>
+  </toolbar>
+  <circuit name="main">
+    <a name="circuit" val="main"/>
+    <a name="appearance" val="logisim_evolution"/>
+    <comp lib="8" loc="(40,30)" name="Text">
+      <a name="text" val="ALTER SMART // PAINEL DA CASA INTELIGENTE  (Logisim-evolution 4.1.0)"/>
+      <a name="font" val="SansSerif bold 20"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp lib="8" loc="(40,58)" name="Text">
+      <a name="text" val="Use a ferramenta Cutucar (mao) para mudar as entradas. Os blocos sao subcircuitos: clique 2x para ver por dentro."/>
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp lib="8" loc="(180,100)" name="Text">
+      <a name="text" val="1) LUZ AUTOMATICA  - sensor de presenca + escuro, ou interruptor do app"/>
+      <a name="font" val="SansSerif bold 14"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp loc="(420,150)" name="luz_automatica"/>
+    <comp lib="0" loc="(200,150)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="PRESENCA"/>
+    </comp>
+    <comp lib="0" loc="(200,180)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="ESCURO"/>
+    </comp>
+    <comp lib="0" loc="(200,210)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="MANUAL"/>
+    </comp>
+    <comp lib="5" loc="(670,150)" name="LED">
+      <a name="color" val="#ffd400"/>
+      <a name="label" val="LUZ_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(740,150)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="LUZ"/>
+    </comp>
+    <comp lib="8" loc="(180,270)" name="Text">
+      <a name="text" val="2) ALARME - arme e abra porta/janela ou gere movimento"/>
+      <a name="font" val="SansSerif bold 14"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp loc="(420,320)" name="alarme"/>
+    <comp lib="0" loc="(200,320)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="ARMADO"/>
+    </comp>
+    <comp lib="0" loc="(200,350)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="PORTA"/>
+    </comp>
+    <comp lib="0" loc="(200,380)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="JANELA"/>
+    </comp>
+    <comp lib="0" loc="(200,410)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="MOVIMENTO"/>
+    </comp>
+    <comp lib="5" loc="(670,320)" name="LED">
+      <a name="color" val="#f00000"/>
+      <a name="label" val="SIRENE_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(740,320)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="SIRENE"/>
+    </comp>
+    <comp lib="5" loc="(670,350)" name="LED">
+      <a name="color" val="#ffd400"/>
+      <a name="label" val="AVISO_ABERTA_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(740,350)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="AVISO_ABERTA"/>
+    </comp>
+    <comp lib="8" loc="(180,470)" name="Text">
+      <a name="text" val="3) ESTOQUE - QTD e MIN em binario (4 bits)"/>
+      <a name="font" val="SansSerif bold 14"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp loc="(420,520)" name="alerta_estoque"/>
+    <comp lib="0" loc="(200,520)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="QTD"/>
+      <a name="width" val="4"/>
+    </comp>
+    <comp lib="0" loc="(200,550)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="MIN"/>
+      <a name="width" val="4"/>
+    </comp>
+    <comp lib="5" loc="(670,520)" name="LED">
+      <a name="color" val="#ff007f"/>
+      <a name="label" val="BAIXO_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(740,520)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="BAIXO"/>
+    </comp>
+    <comp lib="5" loc="(670,550)" name="LED">
+      <a name="color" val="#00ff66"/>
+      <a name="label" val="OK_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(740,550)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="OK"/>
+    </comp>
+    <comp lib="8" loc="(180,610)" name="Text">
+      <a name="text" val="4) TERMOSTATO - T e SET em graus C (5 bits)"/>
+      <a name="font" val="SansSerif bold 14"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp loc="(420,660)" name="termostato"/>
+    <comp lib="0" loc="(200,660)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="T"/>
+      <a name="width" val="5"/>
+    </comp>
+    <comp lib="0" loc="(200,690)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="SET"/>
+      <a name="width" val="5"/>
+    </comp>
+    <comp lib="0" loc="(200,720)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="PRESENCA_AR"/>
+    </comp>
+    <comp lib="5" loc="(670,660)" name="LED">
+      <a name="color" val="#00f0ff"/>
+      <a name="label" val="COMPRESSOR_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(740,660)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="COMPRESSOR"/>
+    </comp>
+    <comp lib="5" loc="(670,690)" name="LED">
+      <a name="color" val="#00ff66"/>
+      <a name="label" val="NO_ALVO_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(740,690)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="NO_ALVO"/>
+    </comp>
+    <comp lib="8" loc="(960,100)" name="Text">
+      <a name="text" val="5) STATUS DO PEDIDO - aperte AVANCAR (pulso de clock)"/>
+      <a name="font" val="SansSerif bold 14"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp loc="(1200,150)" name="maquina_pedido"/>
+    <comp lib="5" loc="(1080,150)" name="Button">
+      <a name="label" val="AVANCAR"/>
+      <a name="labelloc" val="west"/>
+    </comp>
+    <comp lib="5" loc="(1080,180)" name="Button">
+      <a name="label" val="RESET"/>
+      <a name="labelloc" val="west"/>
+    </comp>
+    <comp lib="5" loc="(1450,150)" name="LED">
+      <a name="color" val="#00ff66"/>
+      <a name="label" val="S1_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(1520,150)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="S1"/>
+    </comp>
+    <comp lib="5" loc="(1450,180)" name="LED">
+      <a name="color" val="#00ff66"/>
+      <a name="label" val="S0_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(1520,180)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="S0"/>
+    </comp>
+    <comp lib="5" loc="(1450,210)" name="LED">
+      <a name="color" val="#ffd400"/>
+      <a name="label" val="SOLICITADO_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(1520,210)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="SOLICITADO"/>
+    </comp>
+    <comp lib="5" loc="(1450,240)" name="LED">
+      <a name="color" val="#00f0ff"/>
+      <a name="label" val="ACEITO_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(1520,240)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="ACEITO"/>
+    </comp>
+    <comp lib="5" loc="(1450,270)" name="LED">
+      <a name="color" val="#ff007f"/>
+      <a name="label" val="ANDAMENTO_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(1520,270)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="ANDAMENTO"/>
+    </comp>
+    <comp lib="5" loc="(1450,300)" name="LED">
+      <a name="color" val="#00ff66"/>
+      <a name="label" val="CONCLUIDO_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(1520,300)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="CONCLUIDO"/>
+    </comp>
+    <wire from="(200,150)" to="(420,150)"/>
+    <wire from="(200,180)" to="(420,180)"/>
+    <wire from="(200,210)" to="(420,210)"/>
+    <wire from="(200,320)" to="(420,320)"/>
+    <wire from="(200,350)" to="(420,350)"/>
+    <wire from="(200,380)" to="(420,380)"/>
+    <wire from="(200,410)" to="(420,410)"/>
+    <wire from="(200,520)" to="(420,520)"/>
+    <wire from="(200,550)" to="(420,550)"/>
+    <wire from="(200,660)" to="(420,660)"/>
+    <wire from="(200,690)" to="(420,690)"/>
+    <wire from="(200,720)" to="(420,720)"/>
+    <wire from="(580,150)" to="(670,150)"/>
+    <wire from="(580,320)" to="(670,320)"/>
+    <wire from="(580,350)" to="(670,350)"/>
+    <wire from="(580,520)" to="(670,520)"/>
+    <wire from="(580,550)" to="(670,550)"/>
+    <wire from="(580,660)" to="(670,660)"/>
+    <wire from="(580,690)" to="(670,690)"/>
+    <wire from="(670,150)" to="(740,150)"/>
+    <wire from="(670,320)" to="(740,320)"/>
+    <wire from="(670,350)" to="(740,350)"/>
+    <wire from="(670,520)" to="(740,520)"/>
+    <wire from="(670,550)" to="(740,550)"/>
+    <wire from="(670,660)" to="(740,660)"/>
+    <wire from="(670,690)" to="(740,690)"/>
+    <wire from="(1080,150)" to="(1200,150)"/>
+    <wire from="(1080,180)" to="(1200,180)"/>
+    <wire from="(1360,150)" to="(1450,150)"/>
+    <wire from="(1360,180)" to="(1450,180)"/>
+    <wire from="(1360,210)" to="(1450,210)"/>
+    <wire from="(1360,240)" to="(1450,240)"/>
+    <wire from="(1360,270)" to="(1450,270)"/>
+    <wire from="(1360,300)" to="(1450,300)"/>
+    <wire from="(1450,150)" to="(1520,150)"/>
+    <wire from="(1450,180)" to="(1520,180)"/>
+    <wire from="(1450,210)" to="(1520,210)"/>
+    <wire from="(1450,240)" to="(1520,240)"/>
+    <wire from="(1450,270)" to="(1520,270)"/>
+    <wire from="(1450,300)" to="(1520,300)"/>
+  </circuit>
+  <circuit name="luz_automatica">
+    <a name="circuit" val="luz_automatica"/>
+    <a name="appearance" val="custom"/>
+    <appear>
+      <rect fill="#0a0a12" height="120" stroke="#00b050" stroke-width="2" width="160" x="0" y="-35"/>
+      <text fill="#00ff66" font-family="SansSerif" font-size="12" font-weight="bold" text-anchor="middle" x="80" y="-15">LUZ AUTOMATICA</text>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="start" x="6" y="4">PRESENCA</text>
+      <circ-port dir="in" pin="170,120" x="0" y="0"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="start" x="6" y="34">ESCURO</text>
+      <circ-port dir="in" pin="170,180" x="0" y="30"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="start" x="6" y="64">MANUAL</text>
+      <circ-port dir="in" pin="170,240" x="0" y="60"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="end" x="154" y="4">LUZ</text>
+      <circ-port dir="out" pin="840,200" x="160" y="0"/>
+      <circ-anchor facing="east" x="0" y="0"/>
+    </appear>
+    <comp lib="8" loc="(100,30)" name="Text">
+      <a name="text" val="ALTER SMART // 01 - LUZ AUTOMATICA"/>
+      <a name="font" val="SansSerif bold 18"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp lib="8" loc="(100,55)" name="Text">
+      <a name="text" val="LUZ = (PRESENCA . ESCURO) + MANUAL   |  sensor PIR + LDR + interruptor do app"/>
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp lib="0" loc="(170,120)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="PRESENCA"/>
+    </comp>
+    <comp lib="0" loc="(210,120)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="PRESENCA"/>
+    </comp>
+    <comp lib="0" loc="(170,180)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="ESCURO"/>
+    </comp>
+    <comp lib="0" loc="(210,180)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="ESCURO"/>
+    </comp>
+    <comp lib="0" loc="(170,240)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="MANUAL"/>
+    </comp>
+    <comp lib="0" loc="(210,240)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="MANUAL"/>
+    </comp>
+    <comp lib="1" loc="(530,150)" name="AND Gate"/>
+    <comp lib="0" loc="(440,130)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="PRESENCA"/>
+    </comp>
+    <comp lib="0" loc="(440,170)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="ESCURO"/>
+    </comp>
+    <comp lib="1" loc="(660,200)" name="OR Gate"/>
+    <comp lib="0" loc="(490,220)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="MANUAL"/>
+    </comp>
+    <comp lib="5" loc="(760,170)" name="LED">
+      <a name="color" val="#ffd400"/>
+      <a name="label" val="LUZ_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(840,200)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="LUZ"/>
+    </comp>
+    <wire from="(170,120)" to="(210,120)"/>
+    <wire from="(170,180)" to="(210,180)"/>
+    <wire from="(170,240)" to="(210,240)"/>
+    <wire from="(440,130)" to="(480,130)"/>
+    <wire from="(440,170)" to="(480,170)"/>
+    <wire from="(490,220)" to="(610,220)"/>
+    <wire from="(530,150)" to="(580,150)"/>
+    <wire from="(580,150)" to="(580,180)"/>
+    <wire from="(580,180)" to="(610,180)"/>
+    <wire from="(660,200)" to="(730,200)"/>
+    <wire from="(730,200)" to="(760,200)"/>
+    <wire from="(760,170)" to="(760,200)"/>
+    <wire from="(760,200)" to="(840,200)"/>
+  </circuit>
+  <circuit name="alarme">
+    <a name="circuit" val="alarme"/>
+    <a name="appearance" val="custom"/>
+    <appear>
+      <rect fill="#0a0a12" height="150" stroke="#00b050" stroke-width="2" width="160" x="0" y="-35"/>
+      <text fill="#00ff66" font-family="SansSerif" font-size="12" font-weight="bold" text-anchor="middle" x="80" y="-15">ALARME</text>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="start" x="6" y="4">ARMADO</text>
+      <circ-port dir="in" pin="170,120" x="0" y="0"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="start" x="6" y="34">PORTA</text>
+      <circ-port dir="in" pin="170,170" x="0" y="30"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="start" x="6" y="64">JANELA</text>
+      <circ-port dir="in" pin="170,220" x="0" y="60"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="start" x="6" y="94">MOVIMENTO</text>
+      <circ-port dir="in" pin="170,270" x="0" y="90"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="end" x="154" y="4">SIRENE</text>
+      <circ-port dir="out" pin="840,160" x="160" y="0"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="end" x="154" y="34">AVISO_ABERTA</text>
+      <circ-port dir="out" pin="840,370" x="160" y="30"/>
+      <circ-anchor facing="east" x="0" y="0"/>
+    </appear>
+    <comp lib="8" loc="(100,30)" name="Text">
+      <a name="text" val="ALTER SMART // 02 - ALARME RESIDENCIAL"/>
+      <a name="font" val="SansSerif bold 18"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp lib="8" loc="(100,55)" name="Text">
+      <a name="text" val="SIRENE = ARMADO . (PORTA + JANELA + MOVIMENTO)    AVISO = /ARMADO . (PORTA + JANELA)"/>
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp lib="0" loc="(170,120)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="ARMADO"/>
+    </comp>
+    <comp lib="0" loc="(210,120)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="ARMADO"/>
+    </comp>
+    <comp lib="0" loc="(170,170)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="PORTA"/>
+    </comp>
+    <comp lib="0" loc="(210,170)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="PORTA"/>
+    </comp>
+    <comp lib="0" loc="(170,220)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="JANELA"/>
+    </comp>
+    <comp lib="0" loc="(210,220)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="JANELA"/>
+    </comp>
+    <comp lib="0" loc="(170,270)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="MOVIMENTO"/>
+    </comp>
+    <comp lib="0" loc="(210,270)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="MOVIMENTO"/>
+    </comp>
+    <comp lib="1" loc="(530,180)" name="OR Gate">
+      <a name="inputs" val="3"/>
+    </comp>
+    <comp lib="0" loc="(420,130)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="PORTA"/>
+    </comp>
+    <comp lib="0" loc="(420,180)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="JANELA"/>
+    </comp>
+    <comp lib="0" loc="(420,230)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="MOVIMENTO"/>
+    </comp>
+    <comp lib="1" loc="(660,160)" name="AND Gate"/>
+    <comp lib="0" loc="(530,100)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="ARMADO"/>
+    </comp>
+    <comp lib="5" loc="(760,130)" name="LED">
+      <a name="color" val="#f00000"/>
+      <a name="label" val="SIRENE_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(840,160)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="SIRENE"/>
+    </comp>
+    <comp lib="1" loc="(530,330)" name="OR Gate"/>
+    <comp lib="0" loc="(440,310)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="PORTA"/>
+    </comp>
+    <comp lib="0" loc="(440,350)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="JANELA"/>
+    </comp>
+    <comp lib="1" loc="(530,410)" name="NOT Gate"/>
+    <comp lib="0" loc="(430,410)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="ARMADO"/>
+    </comp>
+    <comp lib="1" loc="(660,370)" name="AND Gate"/>
+    <comp lib="5" loc="(760,340)" name="LED">
+      <a name="color" val="#ffd400"/>
+      <a name="label" val="AVISO_ABERTA_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(840,370)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="AVISO_ABERTA"/>
+    </comp>
+    <wire from="(170,120)" to="(210,120)"/>
+    <wire from="(170,170)" to="(210,170)"/>
+    <wire from="(170,220)" to="(210,220)"/>
+    <wire from="(170,270)" to="(210,270)"/>
+    <wire from="(420,130)" to="(460,130)"/>
+    <wire from="(420,180)" to="(480,180)"/>
+    <wire from="(420,230)" to="(460,230)"/>
+    <wire from="(430,410)" to="(500,410)"/>
+    <wire from="(440,310)" to="(480,310)"/>
+    <wire from="(440,350)" to="(480,350)"/>
+    <wire from="(460,130)" to="(460,160)"/>
+    <wire from="(460,160)" to="(480,160)"/>
+    <wire from="(460,200)" to="(460,230)"/>
+    <wire from="(460,200)" to="(480,200)"/>
+    <wire from="(530,100)" to="(590,100)"/>
+    <wire from="(530,180)" to="(580,180)"/>
+    <wire from="(530,330)" to="(580,330)"/>
+    <wire from="(530,410)" to="(580,410)"/>
+    <wire from="(580,180)" to="(610,180)"/>
+    <wire from="(580,330)" to="(580,350)"/>
+    <wire from="(580,350)" to="(610,350)"/>
+    <wire from="(580,390)" to="(580,410)"/>
+    <wire from="(580,390)" to="(610,390)"/>
+    <wire from="(590,100)" to="(590,140)"/>
+    <wire from="(590,140)" to="(610,140)"/>
+    <wire from="(660,160)" to="(730,160)"/>
+    <wire from="(660,370)" to="(730,370)"/>
+    <wire from="(730,160)" to="(760,160)"/>
+    <wire from="(730,370)" to="(760,370)"/>
+    <wire from="(760,130)" to="(760,160)"/>
+    <wire from="(760,160)" to="(840,160)"/>
+    <wire from="(760,340)" to="(760,370)"/>
+    <wire from="(760,370)" to="(840,370)"/>
+  </circuit>
+  <circuit name="alerta_estoque">
+    <a name="circuit" val="alerta_estoque"/>
+    <a name="appearance" val="custom"/>
+    <appear>
+      <rect fill="#0a0a12" height="90" stroke="#00b050" stroke-width="2" width="160" x="0" y="-35"/>
+      <text fill="#00ff66" font-family="SansSerif" font-size="12" font-weight="bold" text-anchor="middle" x="80" y="-15">ALERTA DE ESTOQUE</text>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="start" x="6" y="4">QTD</text>
+      <circ-port dir="in" pin="170,120" x="0" y="0"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="start" x="6" y="34">MIN</text>
+      <circ-port dir="in" pin="170,180" x="0" y="30"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="end" x="154" y="4">BAIXO</text>
+      <circ-port dir="out" pin="840,200" x="160" y="0"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="end" x="154" y="34">OK</text>
+      <circ-port dir="out" pin="840,100" x="160" y="30"/>
+      <circ-anchor facing="east" x="0" y="0"/>
+    </appear>
+    <comp lib="8" loc="(100,30)" name="Text">
+      <a name="text" val="ALTER SMART // 03 - ALERTA DE ESTOQUE"/>
+      <a name="font" val="SansSerif bold 18"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp lib="8" loc="(100,55)" name="Text">
+      <a name="text" val="BAIXO = (QTD &lt; MIN) + (QTD = MIN)   -&gt;  mesma regra do banco: quantidade &lt;= quantidade_minima"/>
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp lib="0" loc="(170,120)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="QTD"/>
+      <a name="width" val="4"/>
+    </comp>
+    <comp lib="0" loc="(210,120)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="QTD"/>
+      <a name="width" val="4"/>
+    </comp>
+    <comp lib="0" loc="(170,180)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="MIN"/>
+      <a name="width" val="4"/>
+    </comp>
+    <comp lib="0" loc="(210,180)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="MIN"/>
+      <a name="width" val="4"/>
+    </comp>
+    <comp lib="3" loc="(500,160)" name="Comparator">
+      <a name="width" val="4"/>
+      <a name="mode" val="unsigned"/>
+    </comp>
+    <comp lib="0" loc="(420,120)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="QTD"/>
+      <a name="width" val="4"/>
+    </comp>
+    <comp lib="0" loc="(420,200)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="MIN"/>
+      <a name="width" val="4"/>
+    </comp>
+    <comp lib="1" loc="(640,200)" name="OR Gate"/>
+    <comp lib="5" loc="(760,170)" name="LED">
+      <a name="color" val="#ff007f"/>
+      <a name="label" val="BAIXO_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(840,200)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="BAIXO"/>
+    </comp>
+    <comp lib="5" loc="(760,100)" name="LED">
+      <a name="color" val="#00ff66"/>
+      <a name="label" val="OK_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(840,100)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="OK"/>
+    </comp>
+    <wire from="(170,120)" to="(210,120)"/>
+    <wire from="(170,180)" to="(210,180)"/>
+    <wire from="(420,120)" to="(440,120)"/>
+    <wire from="(420,200)" to="(440,200)"/>
+    <wire from="(440,120)" to="(440,150)"/>
+    <wire from="(440,150)" to="(460,150)"/>
+    <wire from="(440,170)" to="(440,200)"/>
+    <wire from="(440,170)" to="(460,170)"/>
+    <wire from="(500,150)" to="(520,150)"/>
+    <wire from="(500,160)" to="(560,160)"/>
+    <wire from="(500,170)" to="(540,170)"/>
+    <wire from="(520,100)" to="(520,150)"/>
+    <wire from="(520,100)" to="(760,100)"/>
+    <wire from="(540,170)" to="(540,220)"/>
+    <wire from="(540,220)" to="(590,220)"/>
+    <wire from="(560,160)" to="(560,180)"/>
+    <wire from="(560,180)" to="(590,180)"/>
+    <wire from="(640,200)" to="(730,200)"/>
+    <wire from="(730,200)" to="(760,200)"/>
+    <wire from="(760,100)" to="(840,100)"/>
+    <wire from="(760,170)" to="(760,200)"/>
+    <wire from="(760,200)" to="(840,200)"/>
+  </circuit>
+  <circuit name="termostato">
+    <a name="circuit" val="termostato"/>
+    <a name="appearance" val="custom"/>
+    <appear>
+      <rect fill="#0a0a12" height="120" stroke="#00b050" stroke-width="2" width="160" x="0" y="-35"/>
+      <text fill="#00ff66" font-family="SansSerif" font-size="12" font-weight="bold" text-anchor="middle" x="80" y="-15">TERMOSTATO</text>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="start" x="6" y="4">T</text>
+      <circ-port dir="in" pin="170,120" x="0" y="0"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="start" x="6" y="34">SET</text>
+      <circ-port dir="in" pin="170,180" x="0" y="30"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="start" x="6" y="64">PRESENCA</text>
+      <circ-port dir="in" pin="170,240" x="0" y="60"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="end" x="154" y="4">COMPRESSOR</text>
+      <circ-port dir="out" pin="840,170" x="160" y="0"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="end" x="154" y="34">NO_ALVO</text>
+      <circ-port dir="out" pin="840,280" x="160" y="30"/>
+      <circ-anchor facing="east" x="0" y="0"/>
+    </appear>
+    <comp lib="8" loc="(100,30)" name="Text">
+      <a name="text" val="ALTER SMART // 04 - TERMOSTATO DO AR-CONDICIONADO"/>
+      <a name="font" val="SansSerif bold 18"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp lib="8" loc="(100,55)" name="Text">
+      <a name="text" val="COMPRESSOR = (T &gt; SET) . PRESENCA   |   NO_ALVO = (T = SET)   |   T e SET em graus C (0 a 31)"/>
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp lib="0" loc="(170,120)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="T"/>
+      <a name="width" val="5"/>
+    </comp>
+    <comp lib="0" loc="(210,120)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="T"/>
+      <a name="width" val="5"/>
+    </comp>
+    <comp lib="0" loc="(170,180)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="SET"/>
+      <a name="width" val="5"/>
+    </comp>
+    <comp lib="0" loc="(210,180)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="SET"/>
+      <a name="width" val="5"/>
+    </comp>
+    <comp lib="0" loc="(170,240)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="PRESENCA"/>
+    </comp>
+    <comp lib="0" loc="(210,240)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="PRESENCA"/>
+    </comp>
+    <comp lib="3" loc="(500,160)" name="Comparator">
+      <a name="width" val="5"/>
+      <a name="mode" val="unsigned"/>
+    </comp>
+    <comp lib="0" loc="(420,120)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="T"/>
+      <a name="width" val="5"/>
+    </comp>
+    <comp lib="0" loc="(420,200)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="SET"/>
+      <a name="width" val="5"/>
+    </comp>
+    <comp lib="1" loc="(640,170)" name="AND Gate"/>
+    <comp lib="0" loc="(570,330)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="PRESENCA"/>
+    </comp>
+    <comp lib="5" loc="(760,140)" name="LED">
+      <a name="color" val="#00f0ff"/>
+      <a name="label" val="COMPRESSOR_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(840,170)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="COMPRESSOR"/>
+    </comp>
+    <comp lib="5" loc="(760,280)" name="LED">
+      <a name="color" val="#00ff66"/>
+      <a name="label" val="NO_ALVO_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(840,280)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="NO_ALVO"/>
+    </comp>
+    <wire from="(170,120)" to="(210,120)"/>
+    <wire from="(170,180)" to="(210,180)"/>
+    <wire from="(170,240)" to="(210,240)"/>
+    <wire from="(420,120)" to="(440,120)"/>
+    <wire from="(420,200)" to="(440,200)"/>
+    <wire from="(440,120)" to="(440,150)"/>
+    <wire from="(440,150)" to="(460,150)"/>
+    <wire from="(440,170)" to="(440,200)"/>
+    <wire from="(440,170)" to="(460,170)"/>
+    <wire from="(500,150)" to="(520,150)"/>
+    <wire from="(500,160)" to="(510,160)"/>
+    <wire from="(510,160)" to="(510,280)"/>
+    <wire from="(510,280)" to="(760,280)"/>
+    <wire from="(520,150)" to="(590,150)"/>
+    <wire from="(570,330)" to="(590,330)"/>
+    <wire from="(590,190)" to="(590,330)"/>
+    <wire from="(640,170)" to="(730,170)"/>
+    <wire from="(730,170)" to="(760,170)"/>
+    <wire from="(760,140)" to="(760,170)"/>
+    <wire from="(760,170)" to="(840,170)"/>
+    <wire from="(760,280)" to="(840,280)"/>
+  </circuit>
+  <circuit name="maquina_pedido">
+    <a name="circuit" val="maquina_pedido"/>
+    <a name="appearance" val="custom"/>
+    <appear>
+      <rect fill="#0a0a12" height="210" stroke="#00b050" stroke-width="2" width="160" x="0" y="-35"/>
+      <text fill="#00ff66" font-family="SansSerif" font-size="12" font-weight="bold" text-anchor="middle" x="80" y="-15">MAQUINA DO PEDIDO</text>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="start" x="6" y="4">CLK</text>
+      <circ-port dir="in" pin="170,120" x="0" y="0"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="start" x="6" y="34">RESET</text>
+      <circ-port dir="in" pin="170,170" x="0" y="30"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="end" x="154" y="4">S1</text>
+      <circ-port dir="out" pin="1160,120" x="160" y="0"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="end" x="154" y="34">S0</text>
+      <circ-port dir="out" pin="1160,170" x="160" y="30"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="end" x="154" y="64">SOLICITADO</text>
+      <circ-port dir="out" pin="1160,470" x="160" y="60"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="end" x="154" y="94">ACEITO</text>
+      <circ-port dir="out" pin="1160,550" x="160" y="90"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="end" x="154" y="124">ANDAMENTO</text>
+      <circ-port dir="out" pin="1160,630" x="160" y="120"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="end" x="154" y="154">CONCLUIDO</text>
+      <circ-port dir="out" pin="1160,710" x="160" y="150"/>
+      <circ-anchor facing="east" x="0" y="0"/>
+    </appear>
+    <comp lib="8" loc="(100,30)" name="Text">
+      <a name="text" val="ALTER SMART // 06 - MAQUINA DE ESTADOS DO PEDIDO (2 flip-flops D)"/>
+      <a name="font" val="SansSerif bold 18"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp lib="8" loc="(100,55)" name="Text">
+      <a name="text" val="Cada pulso em CLK avanca o status: 00 Solicitado -&gt; 01 Aceito -&gt; 10 Em andamento -&gt; 11 Concluido (para no 11). RESET volta ao 00."/>
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp lib="0" loc="(170,120)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="CLK"/>
+    </comp>
+    <comp lib="0" loc="(210,120)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="CLK"/>
+    </comp>
+    <comp lib="0" loc="(170,170)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="RESET"/>
+    </comp>
+    <comp lib="0" loc="(210,170)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="RESET"/>
+    </comp>
+    <comp lib="1" loc="(460,300)" name="AND Gate"/>
+    <comp lib="0" loc="(370,280)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="S1"/>
+    </comp>
+    <comp lib="0" loc="(370,320)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="S0"/>
+    </comp>
+    <comp lib="1" loc="(530,300)" name="NOT Gate"/>
+    <comp lib="0" loc="(550,300)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="INC"/>
+    </comp>
+    <comp lib="1" loc="(760,120)" name="XOR Gate"/>
+    <comp lib="0" loc="(660,100)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="S0"/>
+    </comp>
+    <comp lib="0" loc="(660,140)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="INC"/>
+    </comp>
+    <comp lib="4" loc="(820,110)" name="D Flip-Flop">
+      <a name="label" val="FF_S0"/>
+    </comp>
+    <comp lib="0" loc="(770,160)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="CLK"/>
+    </comp>
+    <comp lib="0" loc="(840,200)" name="Tunnel">
+      <a name="facing" val="north"/>
+      <a name="label" val="RESET"/>
+    </comp>
+    <comp lib="0" loc="(900,120)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="S0"/>
+    </comp>
+    <comp lib="1" loc="(740,300)" name="AND Gate"/>
+    <comp lib="0" loc="(650,280)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="S0"/>
+    </comp>
+    <comp lib="0" loc="(650,320)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="INC"/>
+    </comp>
+    <comp lib="1" loc="(880,260)" name="XOR Gate"/>
+    <comp lib="0" loc="(780,240)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="S1"/>
+    </comp>
+    <comp lib="4" loc="(940,250)" name="D Flip-Flop">
+      <a name="label" val="FF_S1"/>
+    </comp>
+    <comp lib="0" loc="(890,300)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="CLK"/>
+    </comp>
+    <comp lib="0" loc="(960,340)" name="Tunnel">
+      <a name="facing" val="north"/>
+      <a name="label" val="RESET"/>
+    </comp>
+    <comp lib="0" loc="(1020,260)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="S1"/>
+    </comp>
+    <comp lib="0" loc="(1100,120)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="S1"/>
+    </comp>
+    <comp lib="0" loc="(1160,120)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="S1"/>
+    </comp>
+    <comp lib="0" loc="(1100,170)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="S0"/>
+    </comp>
+    <comp lib="0" loc="(1160,170)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="S0"/>
+    </comp>
+    <comp lib="8" loc="(580,420)" name="Text">
+      <a name="text" val="Decodificador 2-&gt;4 (status atual)"/>
+      <a name="font" val="SansSerif bold 14"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp lib="0" loc="(620,470)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="S1"/>
+    </comp>
+    <comp lib="1" loc="(680,470)" name="NOT Gate"/>
+    <comp lib="0" loc="(700,470)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="NS1"/>
+    </comp>
+    <comp lib="0" loc="(620,520)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="S0"/>
+    </comp>
+    <comp lib="1" loc="(680,520)" name="NOT Gate"/>
+    <comp lib="0" loc="(700,520)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="NS0"/>
+    </comp>
+    <comp lib="1" loc="(1020,470)" name="AND Gate"/>
+    <comp lib="0" loc="(930,450)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="NS1"/>
+    </comp>
+    <comp lib="0" loc="(930,490)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="NS0"/>
+    </comp>
+    <comp lib="5" loc="(1100,470)" name="LED">
+      <a name="color" val="#ffd400"/>
+      <a name="label" val="SOLICITADO_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(1160,470)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="SOLICITADO"/>
+    </comp>
+    <comp lib="1" loc="(1020,550)" name="AND Gate"/>
+    <comp lib="0" loc="(930,530)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="NS1"/>
+    </comp>
+    <comp lib="0" loc="(930,570)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="S0"/>
+    </comp>
+    <comp lib="5" loc="(1100,550)" name="LED">
+      <a name="color" val="#00f0ff"/>
+      <a name="label" val="ACEITO_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(1160,550)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="ACEITO"/>
+    </comp>
+    <comp lib="1" loc="(1020,630)" name="AND Gate"/>
+    <comp lib="0" loc="(930,610)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="S1"/>
+    </comp>
+    <comp lib="0" loc="(930,650)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="NS0"/>
+    </comp>
+    <comp lib="5" loc="(1100,630)" name="LED">
+      <a name="color" val="#ff007f"/>
+      <a name="label" val="ANDAMENTO_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(1160,630)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="ANDAMENTO"/>
+    </comp>
+    <comp lib="1" loc="(1020,710)" name="AND Gate"/>
+    <comp lib="0" loc="(930,690)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="S1"/>
+    </comp>
+    <comp lib="0" loc="(930,730)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="S0"/>
+    </comp>
+    <comp lib="5" loc="(1100,710)" name="LED">
+      <a name="color" val="#00ff66"/>
+      <a name="label" val="CONCLUIDO_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(1160,710)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="CONCLUIDO"/>
+    </comp>
+    <wire from="(170,120)" to="(210,120)"/>
+    <wire from="(170,170)" to="(210,170)"/>
+    <wire from="(370,280)" to="(410,280)"/>
+    <wire from="(370,320)" to="(410,320)"/>
+    <wire from="(460,300)" to="(500,300)"/>
+    <wire from="(530,300)" to="(550,300)"/>
+    <wire from="(620,470)" to="(650,470)"/>
+    <wire from="(620,520)" to="(650,520)"/>
+    <wire from="(650,280)" to="(690,280)"/>
+    <wire from="(650,320)" to="(690,320)"/>
+    <wire from="(660,100)" to="(700,100)"/>
+    <wire from="(660,140)" to="(700,140)"/>
+    <wire from="(680,470)" to="(700,470)"/>
+    <wire from="(680,520)" to="(700,520)"/>
+    <wire from="(740,300)" to="(800,300)"/>
+    <wire from="(760,120)" to="(810,120)"/>
+    <wire from="(770,160)" to="(810,160)"/>
+    <wire from="(780,240)" to="(820,240)"/>
+    <wire from="(800,280)" to="(800,300)"/>
+    <wire from="(800,280)" to="(820,280)"/>
+    <wire from="(840,170)" to="(840,200)"/>
+    <wire from="(870,120)" to="(900,120)"/>
+    <wire from="(880,260)" to="(930,260)"/>
+    <wire from="(890,300)" to="(930,300)"/>
+    <wire from="(930,450)" to="(970,450)"/>
+    <wire from="(930,490)" to="(970,490)"/>
+    <wire from="(930,530)" to="(970,530)"/>
+    <wire from="(930,570)" to="(970,570)"/>
+    <wire from="(930,610)" to="(970,610)"/>
+    <wire from="(930,650)" to="(970,650)"/>
+    <wire from="(930,690)" to="(970,690)"/>
+    <wire from="(930,730)" to="(970,730)"/>
+    <wire from="(960,310)" to="(960,340)"/>
+    <wire from="(990,260)" to="(1020,260)"/>
+    <wire from="(1020,470)" to="(1100,470)"/>
+    <wire from="(1020,550)" to="(1100,550)"/>
+    <wire from="(1020,630)" to="(1100,630)"/>
+    <wire from="(1020,710)" to="(1100,710)"/>
+    <wire from="(1100,120)" to="(1160,120)"/>
+    <wire from="(1100,170)" to="(1160,170)"/>
+    <wire from="(1100,470)" to="(1160,470)"/>
+    <wire from="(1100,550)" to="(1160,550)"/>
+    <wire from="(1100,630)" to="(1160,630)"/>
+    <wire from="(1100,710)" to="(1160,710)"/>
+  </circuit>
+  <circuit name="logica_pedido">
+    <a name="circuit" val="logica_pedido"/>
+    <a name="appearance" val="custom"/>
+    <appear>
+      <rect fill="#0a0a12" height="210" stroke="#00b050" stroke-width="2" width="160" x="0" y="-35"/>
+      <text fill="#00ff66" font-family="SansSerif" font-size="12" font-weight="bold" text-anchor="middle" x="80" y="-15">LOGICA DO PEDIDO</text>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="start" x="6" y="4">S1</text>
+      <circ-port dir="in" pin="170,120" x="0" y="0"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="start" x="6" y="34">S0</text>
+      <circ-port dir="in" pin="170,170" x="0" y="30"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="start" x="6" y="64">AVANCAR</text>
+      <circ-port dir="in" pin="170,220" x="0" y="60"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="end" x="154" y="4">N0</text>
+      <circ-port dir="out" pin="1160,120" x="160" y="0"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="end" x="154" y="34">N1</text>
+      <circ-port dir="out" pin="1160,230" x="160" y="30"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="end" x="154" y="64">SOLICITADO</text>
+      <circ-port dir="out" pin="1160,500" x="160" y="60"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="end" x="154" y="94">ACEITO</text>
+      <circ-port dir="out" pin="1160,580" x="160" y="90"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="end" x="154" y="124">ANDAMENTO</text>
+      <circ-port dir="out" pin="1160,660" x="160" y="120"/>
+      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="end" x="154" y="154">CONCLUIDO</text>
+      <circ-port dir="out" pin="1160,740" x="160" y="150"/>
+      <circ-anchor facing="east" x="0" y="0"/>
+    </appear>
+    <comp lib="8" loc="(100,30)" name="Text">
+      <a name="text" val="ALTER SMART // 05 - STATUS DO PEDIDO (logica de proximo estado + decodificador)"/>
+      <a name="font" val="SansSerif bold 18"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp lib="8" loc="(100,55)" name="Text">
+      <a name="text" val="00 Solicitado -&gt; 01 Aceito -&gt; 10 Em andamento -&gt; 11 Concluido.  So avanca (igual a API PUT /pedidos/:id)"/>
+      <a name="font" val="SansSerif plain 12"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp lib="0" loc="(170,120)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="S1"/>
+    </comp>
+    <comp lib="0" loc="(210,120)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="S1"/>
+    </comp>
+    <comp lib="0" loc="(170,170)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="S0"/>
+    </comp>
+    <comp lib="0" loc="(210,170)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="S0"/>
+    </comp>
+    <comp lib="0" loc="(170,220)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="AVANCAR"/>
+    </comp>
+    <comp lib="0" loc="(210,220)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="AVANCAR"/>
+    </comp>
+    <comp lib="1" loc="(460,300)" name="AND Gate"/>
+    <comp lib="0" loc="(370,280)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="S1"/>
+    </comp>
+    <comp lib="0" loc="(370,320)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="S0"/>
+    </comp>
+    <comp lib="1" loc="(530,300)" name="NOT Gate"/>
+    <comp lib="1" loc="(660,320)" name="AND Gate"/>
+    <comp lib="0" loc="(490,340)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="AVANCAR"/>
+    </comp>
+    <comp lib="0" loc="(680,320)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="INC"/>
+    </comp>
+    <comp lib="1" loc="(1100,120)" name="XOR Gate"/>
+    <comp lib="0" loc="(1000,100)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="S0"/>
+    </comp>
+    <comp lib="0" loc="(1000,140)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="INC"/>
+    </comp>
+    <comp lib="0" loc="(1160,120)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="N0"/>
+    </comp>
+    <comp lib="1" loc="(980,270)" name="AND Gate"/>
+    <comp lib="0" loc="(890,250)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="S0"/>
+    </comp>
+    <comp lib="0" loc="(890,290)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="INC"/>
+    </comp>
+    <comp lib="1" loc="(1100,230)" name="XOR Gate"/>
+    <comp lib="0" loc="(1000,210)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="S1"/>
+    </comp>
+    <comp lib="0" loc="(1160,230)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="N1"/>
+    </comp>
+    <comp lib="8" loc="(820,350)" name="Text">
+      <a name="text" val="Decodificador 2-&gt;4 (status atual)"/>
+      <a name="font" val="SansSerif bold 14"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp lib="0" loc="(820,380)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="S1"/>
+    </comp>
+    <comp lib="1" loc="(880,380)" name="NOT Gate"/>
+    <comp lib="0" loc="(900,380)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="NS1"/>
+    </comp>
+    <comp lib="0" loc="(820,430)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="S0"/>
+    </comp>
+    <comp lib="1" loc="(880,430)" name="NOT Gate"/>
+    <comp lib="0" loc="(900,430)" name="Tunnel">
+      <a name="facing" val="west"/>
+      <a name="label" val="NS0"/>
+    </comp>
+    <comp lib="1" loc="(1020,500)" name="AND Gate"/>
+    <comp lib="0" loc="(930,480)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="NS1"/>
+    </comp>
+    <comp lib="0" loc="(930,520)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="NS0"/>
+    </comp>
+    <comp lib="5" loc="(1100,500)" name="LED">
+      <a name="color" val="#ffd400"/>
+      <a name="label" val="SOLICITADO_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(1160,500)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="SOLICITADO"/>
+    </comp>
+    <comp lib="1" loc="(1020,580)" name="AND Gate"/>
+    <comp lib="0" loc="(930,560)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="NS1"/>
+    </comp>
+    <comp lib="0" loc="(930,600)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="S0"/>
+    </comp>
+    <comp lib="5" loc="(1100,580)" name="LED">
+      <a name="color" val="#00f0ff"/>
+      <a name="label" val="ACEITO_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(1160,580)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="ACEITO"/>
+    </comp>
+    <comp lib="1" loc="(1020,660)" name="AND Gate"/>
+    <comp lib="0" loc="(930,640)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="S1"/>
+    </comp>
+    <comp lib="0" loc="(930,680)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="NS0"/>
+    </comp>
+    <comp lib="5" loc="(1100,660)" name="LED">
+      <a name="color" val="#ff007f"/>
+      <a name="label" val="ANDAMENTO_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(1160,660)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="ANDAMENTO"/>
+    </comp>
+    <comp lib="1" loc="(1020,740)" name="AND Gate"/>
+    <comp lib="0" loc="(930,720)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="S1"/>
+    </comp>
+    <comp lib="0" loc="(930,760)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="S0"/>
+    </comp>
+    <comp lib="5" loc="(1100,740)" name="LED">
+      <a name="color" val="#00ff66"/>
+      <a name="label" val="CONCLUIDO_LED"/>
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="0" loc="(1160,740)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="CONCLUIDO"/>
+    </comp>
+    <wire from="(170,120)" to="(210,120)"/>
+    <wire from="(170,170)" to="(210,170)"/>
+    <wire from="(170,220)" to="(210,220)"/>
+    <wire from="(370,280)" to="(410,280)"/>
+    <wire from="(370,320)" to="(410,320)"/>
+    <wire from="(460,300)" to="(500,300)"/>
+    <wire from="(490,340)" to="(610,340)"/>
+    <wire from="(530,300)" to="(580,300)"/>
+    <wire from="(580,300)" to="(610,300)"/>
+    <wire from="(660,320)" to="(680,320)"/>
+    <wire from="(820,380)" to="(850,380)"/>
+    <wire from="(820,430)" to="(850,430)"/>
+    <wire from="(880,380)" to="(900,380)"/>
+    <wire from="(880,430)" to="(900,430)"/>
+    <wire from="(890,250)" to="(930,250)"/>
+    <wire from="(890,290)" to="(930,290)"/>
+    <wire from="(930,480)" to="(970,480)"/>
+    <wire from="(930,520)" to="(970,520)"/>
+    <wire from="(930,560)" to="(970,560)"/>
+    <wire from="(930,600)" to="(970,600)"/>
+    <wire from="(930,640)" to="(970,640)"/>
+    <wire from="(930,680)" to="(970,680)"/>
+    <wire from="(930,720)" to="(970,720)"/>
+    <wire from="(930,760)" to="(970,760)"/>
+    <wire from="(980,270)" to="(1020,270)"/>
+    <wire from="(1000,100)" to="(1040,100)"/>
+    <wire from="(1000,140)" to="(1040,140)"/>
+    <wire from="(1000,210)" to="(1040,210)"/>
+    <wire from="(1020,270)" to="(1040,270)"/>
+    <wire from="(1020,500)" to="(1100,500)"/>
+    <wire from="(1020,580)" to="(1100,580)"/>
+    <wire from="(1020,660)" to="(1100,660)"/>
+    <wire from="(1020,740)" to="(1100,740)"/>
+    <wire from="(1040,250)" to="(1040,270)"/>
+    <wire from="(1100,120)" to="(1160,120)"/>
+    <wire from="(1100,230)" to="(1160,230)"/>
+    <wire from="(1100,500)" to="(1160,500)"/>
+    <wire from="(1100,580)" to="(1160,580)"/>
+    <wire from="(1100,660)" to="(1160,660)"/>
+    <wire from="(1100,740)" to="(1160,740)"/>
+  </circuit>
+</project>
