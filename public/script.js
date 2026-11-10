@@ -87,9 +87,16 @@ const RENDER = {
       ${acts('rotinas', r.id, `<button class="btn sm" onclick="executar(${r.id})">▶ Executar</button>`)}</article>`).join(''),
   enderecos: l => l.map(e => `<article class="card"><h3>${esc(e.rua)}, ${esc(e.numero)}</h3>${acts('enderecos', e.id)}</article>`).join(''),
   ambientes: l => l.map(a => `<article class="card"><h3>${esc(a.nome)}</h3>${acts('ambientes', a.id)}</article>`).join(''),
+  experimentos: l => l.map(e => `<article class="card x-${e.area}"><h3>${esc(e.titulo)}</h3>
+      <span class="badge">${esc(LAB_AREA[e.area] || e.area)}</span>
+      ${e.ambiente || e.dispositivo ? `<div class="muted">${esc(e.ambiente || '')} ${e.dispositivo ? '· ' + esc(e.dispositivo) : ''}</div>` : ''}
+      <div class="resumo">${resumoExp(e)}</div><small class="muted">${esc(e.data)}</small>
+      <div class="acts"><button class="btn cyan sm" onclick="abrirExp(${e.id})">Reabrir</button><button class="btn pink sm" onclick="del('experimentos',${e.id})">Excluir</button></div></article>`).join(''),
   historico: l => l.map(h => `<div class="t-${h.tipo}"><small>${esc(h.data)}</small><b>[${h.tipo}]</b> ${esc(h.descricao)}</div>`).join('')
 };
-const ENDPOINT = { pedidos: 'pedidos', servicos: 'servicos', produtos: 'produtos', dispositivos: 'dispositivos', rotinas: 'rotinas', enderecos: 'enderecos', ambientes: 'ambientes', historico: 'historico' };
+const ENDPOINT = { pedidos: 'pedidos', servicos: 'servicos', produtos: 'produtos', dispositivos: 'dispositivos', rotinas: 'rotinas', enderecos: 'enderecos', ambientes: 'ambientes', experimentos: 'experimentos', historico: 'historico' };
+const LAB_AREA = { campo_eletrico: 'Campo elétrico', eletrostatica: 'Eletrostática', magnetismo: 'Magnetismo', termodinamica: 'Termodinâmica', eletronica: 'Eletrônica' };
+const resumoExp = e => (window.resumoLab ? window.resumoLab(e) : '');
 
 const refresh = run(async quiet => {
   const keys = Object.keys(ENDPOINT);
@@ -104,6 +111,7 @@ const refresh = run(async quiet => {
   });
   const baixos = D.produtos.filter(p => p.baixo);
   $('#alerta').hidden = !baixos.length;
+  window.aoAtualizar && window.aoAtualizar(quiet);
   $('#alerta').textContent = baixos.length ? '⚠ ALERTA DE ESTOQUE: ' + baixos.map(p => `${p.nome} (${p.quantidade})`).join(', ') + ' — vá em Estoque e reponha.' : '';
 });
 
