@@ -74,20 +74,24 @@ class Circuito:
     # entre os túneis das entradas e os túneis que alimentam as portas.
     DX = 200
 
-    def __init__(self, nome="main"):
+    def __init__(self, nome="main", titulo=None):
         self.nome = nome
+        self.titulo = titulo or nome   # texto mostrado no bloco quando vira subcircuito
         self.comps = []      # (xml, [pontos de conexão])
         self.fios = []       # [(p1, p2)]
+        self.ins, self.outs = [], []   # (rótulo, bits, posição final) — usados na aparência do bloco
 
     # ---------- componentes ----------
     def _add(self, lib, loc, name, attrs, pontos):
         a = "".join(f'\n      <a name="{k}" val={quoteattr(str(v))}/>' for k, v in attrs.items())
         x, y = loc[0] + self.DX, loc[1]
-        xml = f'    <comp lib="{lib}" loc="({x},{y})" name="{name}">{a}\n    </comp>' if a else \
-              f'    <comp lib="{lib}" loc="({x},{y})" name="{name}"/>'
+        lb = f' lib="{lib}"' if lib != "" else ""
+        xml = f'    <comp{lb} loc="({x},{y})" name="{name}">{a}\n    </comp>' if a else \
+              f'    <comp{lb} loc="({x},{y})" name="{name}"/>'
         self.comps.append((xml, pontos))
 
     def entrada(self, loc, rotulo, bits=1):
+        self.ins.append((rotulo, bits, (loc[0] + self.DX, loc[1])))
         at = {"appearance": "NewPins", "label": rotulo}
         if bits > 1:
             at["width"] = bits
@@ -95,6 +99,7 @@ class Circuito:
         return loc
 
     def saida(self, loc, rotulo, bits=1):
+        self.outs.append((rotulo, bits, (loc[0] + self.DX, loc[1])))
         at = {"appearance": "NewPins", "facing": "west", "output": "true", "label": rotulo}
         if bits > 1:
             at["width"] = bits
@@ -139,6 +144,41 @@ class Circuito:
         self._add(5, loc, "LED", {"color": COR[cor], "label": rotulo, "labelvisible": "false"}, [loc])
         return loc
 
+    def flipflop(self, loc, rotulo):
+        """D Flip-Flop (borda de subida). loc = canto superior esquerdo do corpo."""
+        x, y = loc
+        p = {"D": (x - 10, y + 10), "CLK": (x - 10, y + 50), "Q": (x + 50, y + 10), "NQ": (x + 50, y + 50), "R": (x + 20, y + 60)}
+        self._add(4, loc, "D Flip-Flop", {"label": rotulo}, list(p.values()))
+        return p
+
+    def botao(self, loc, rotulo):
+        """Botão de apertar (I/O). A saída fica em loc; o corpo fica à esquerda."""
+        self._add(5, loc, "Button", {"label": rotulo, "labelloc": "west"}, [loc])
+        return loc
+
+    def bloco(self, loc, sub):
+        """Instância de um subcircuito (aparência própria): entradas à esquerda, saídas à direita, 30 px entre portas."""
+        x, y = loc
+        ins = {r: (x, y + 30 * i) for i, (r, _, _) in enumerate(sub.ins)}
+        outs = {r: (x + sub.LARG, y + 30 * j) for j, (r, _, _) in enumerate(sub.outs)}
+        self._add("", loc, sub.nome, {}, list(ins.values()) + list(outs.values()))
+        return ins, outs
+
+    LARG = 160
+    def aparencia(self):
+        n = max(len(self.ins), len(self.outs))
+        W, H = self.LARG, 30 * (n - 1) + 30
+        t = [f'      <rect fill="#0a0a12" height="{H + 30}" stroke="#00b050" stroke-width="2" width="{W}" x="0" y="-35"/>',
+             f'      <text fill="#00ff66" font-family="SansSerif" font-size="12" font-weight="bold" text-anchor="middle" x="{W // 2}" y="-15">{self.titulo}</text>']
+        for i, (r, b, pos) in enumerate(self.ins):
+            t.append(f'      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="start" x="6" y="{30 * i + 4}">{r}</text>')
+            t.append(f'      <circ-port dir="in" pin="{pos[0]},{pos[1]}" x="0" y="{30 * i}"/>')
+        for j, (r, b, pos) in enumerate(self.outs):
+            t.append(f'      <text fill="#c9ffe0" font-family="SansSerif" font-size="11" text-anchor="end" x="{W - 6}" y="{30 * j + 4}">{r}</text>')
+            t.append(f'      <circ-port dir="out" pin="{pos[0]},{pos[1]}" x="{W}" y="{30 * j}"/>')
+        t.append('      <circ-anchor facing="east" x="0" y="0"/>')
+        return '    <a name="appearance" val="custom"/>\n    <appear>\n' + "\n".join(t) + '\n    </appear>'
+
     def texto(self, loc, txt, tam=12, negrito=False):
         fonte = f"SansSerif {'bold' if negrito else 'plain'} {tam}"
         self._add(8, (loc[0] - self.DX + 60, loc[1]), "Text", {"text": txt, "font": fonte, "halign": "left"}, [])
@@ -166,10 +206,9 @@ class Circuito:
                 saida += [((a[0], y1), (a[0], y2)) for y1, y2 in zip(ys, ys[1:])]
         return sorted(set(saida))
 
-    def xml(self):
-        linhas = [f'  <circuit name="{self.nome}">',
-                  '    <a name="appearance" val="logisim_evolution"/>',
-                  f'    <a name="circuit" val="{self.nome}"/>']
+    def xml(self, como_bloco=False):
+        linhas = [f'  <circuit name="{self.nome}">', f'    <a name="circuit" val="{self.nome}"/>',
+                  self.aparencia() if como_bloco else '    <a name="appearance" val="logisim_evolution"/>']
         linhas += [c for c, _ in self.comps]
         d = self.DX
         linhas += [f'    <wire from="({a[0] + d},{a[1]})" to="({b[0] + d},{b[1]})"/>' for a, b in self._quebrar_fios()]
@@ -206,8 +245,8 @@ def saida_com_led(c, origem, y_saida, rotulo, cor="verde", x_led=560, x_pino=640
 # 01 — Luz automática:  LUZ = (PRESENCA · ESCURO) + MANUAL
 #      (aba Automação → dispositivo do tipo "luz")
 # =====================================================================
-def luz_automatica():
-    c = Circuito()
+def luz_automatica(nome="main"):
+    c = Circuito(nome, "LUZ AUTOMATICA")
     c.texto((40, 30), "ALTER SMART // 01 - LUZ AUTOMATICA", 18, True)
     c.texto((40, 55), "LUZ = (PRESENCA . ESCURO) + MANUAL   |  sensor PIR + LDR + interruptor do app")
     for y, n in [(120, "PRESENCA"), (180, "ESCURO"), (240, "MANUAL")]:
@@ -219,7 +258,7 @@ def luz_automatica():
     c.fio(sa, (380, 150), (380, 180), o1)
     tunel_para(c, o2, "MANUAL", recuo=120)
     saida_com_led(c, so, 200, "LUZ", "amarelo")
-    salvar("01_luz_automatica.circ", c)
+    return c
 
 
 # =====================================================================
@@ -227,8 +266,8 @@ def luz_automatica():
 #      AVISO_ABERTA = NOT ARMADO · (PORTA + JANELA)   (lembrete p/ fechar antes de armar)
 #      (dispositivo do tipo "seguranca")
 # =====================================================================
-def alarme():
-    c = Circuito()
+def alarme(nome="main"):
+    c = Circuito(nome, "ALARME")
     c.texto((40, 30), "ALTER SMART // 02 - ALARME RESIDENCIAL", 18, True)
     c.texto((40, 55), "SIRENE = ARMADO . (PORTA + JANELA + MOVIMENTO)    AVISO = /ARMADO . (PORTA + JANELA)")
     for y, n in [(120, "ARMADO"), (170, "PORTA"), (220, "JANELA"), (270, "MOVIMENTO")]:
@@ -252,15 +291,15 @@ def alarme():
     c.fio(so2, (380, 330), (380, 350), a3)
     c.fio(no, (380, 410), (380, 390), a4)
     saida_com_led(c, sa2, 370, "AVISO_ABERTA", "amarelo")
-    salvar("02_alarme_seguranca.circ", c)
+    return c
 
 
 # =====================================================================
 # 03 — Alerta de estoque: BAIXO = (QTD <= MIN)  — a mesma regra do SQL
 #      "quantidade <= quantidade_minima" da aba Estoque (4 bits = 0..15 unidades)
 # =====================================================================
-def estoque():
-    c = Circuito()
+def estoque(nome="main"):
+    c = Circuito(nome, "ALERTA DE ESTOQUE")
     c.texto((40, 30), "ALTER SMART // 03 - ALERTA DE ESTOQUE", 18, True)
     c.texto((40, 55), "BAIXO = (QTD < MIN) + (QTD = MIN)   ->  mesma regra do banco: quantidade <= quantidade_minima")
     entrada_com_tunel(c, 120, "QTD", 4)
@@ -275,15 +314,15 @@ def estoque():
     c.fio(gt, (320, 150), (320, 100), (640, 100))
     c.led((560, 100), "OK_LED", "verde")
     c.saida((640, 100), "OK")
-    salvar("03_alerta_estoque.circ", c)
+    return c
 
 
 # =====================================================================
 # 04 — Termostato do ar-condicionado (liga com a termodinâmica)
 #      RESFRIAR = (T > SET) · PRESENCA     NO_ALVO = (T = SET)    (5 bits = 0..31 °C)
 # =====================================================================
-def termostato():
-    c = Circuito()
+def termostato(nome="main"):
+    c = Circuito(nome, "TERMOSTATO")
     c.texto((40, 30), "ALTER SMART // 04 - TERMOSTATO DO AR-CONDICIONADO", 18, True)
     c.texto((40, 55), "COMPRESSOR = (T > SET) . PRESENCA   |   NO_ALVO = (T = SET)   |   T e SET em graus C (0 a 31)")
     entrada_com_tunel(c, 120, "T", 5)
@@ -299,7 +338,7 @@ def termostato():
     c.fio(eq, (310, 160), (310, 280), (640, 280))
     c.led((560, 280), "NO_ALVO_LED", "verde")
     c.saida((640, 280), "NO_ALVO")
-    salvar("04_termostato.circ", c)
+    return c
 
 
 # =====================================================================
@@ -308,8 +347,8 @@ def termostato():
 #      INC = AVANCAR · /(S1·S0);  N0 = S0 xor INC;  N1 = S1 xor (S0·INC)
 #      + decodificador 2->4 que acende o LED do status atual
 # =====================================================================
-def status_pedido():
-    c = Circuito()
+def status_pedido(nome="main"):
+    c = Circuito(nome, "LOGICA DO PEDIDO")
     c.texto((40, 30), "ALTER SMART // 05 - STATUS DO PEDIDO (logica de proximo estado + decodificador)", 18, True)
     c.texto((40, 55), "00 Solicitado -> 01 Aceito -> 10 Em andamento -> 11 Concluido.  So avanca (igual a API PUT /pedidos/:id)")
     for y, n in [(120, "S1"), (170, "S0"), (220, "AVANCAR")]:
@@ -354,12 +393,114 @@ def status_pedido():
         c.fio(s, (960, y))
         c.led((900, y), rot + "_LED", cor)
         c.saida((960, y), rot)
-    salvar("05_status_pedido.circ", c)
+    return c
+
+
+# =====================================================================
+# 06 — Máquina de estados do pedido (sequencial, com 2 D Flip-Flops)
+#      Cada pulso em CLK (botão AVANCAR) avança: 00 → 01 → 10 → 11 e para em 11.
+#      RESET volta para 00 (Solicitado). Usa a mesma lógica do circuito 05 com AVANCAR = 1.
+# =====================================================================
+def maquina_pedido(nome="main"):
+    c = Circuito(nome, "MAQUINA DO PEDIDO")
+    c.texto((40, 30), "ALTER SMART // 06 - MAQUINA DE ESTADOS DO PEDIDO (2 flip-flops D)", 18, True)
+    c.texto((40, 55), "Cada pulso em CLK avanca o status: 00 Solicitado -> 01 Aceito -> 10 Em andamento -> 11 Concluido (para no 11). RESET volta ao 00.")
+    entrada_com_tunel(c, 120, "CLK")
+    entrada_com_tunel(c, 170, "RESET")
+    # INC = /(S1 . S0)
+    (a1, a2), sa = c.porta("AND", (260, 300))
+    tunel_para(c, a1, "S1"); tunel_para(c, a2, "S0")
+    ni, no = c.nao((330, 300)); c.fio(sa, ni)
+    c.fio(no, (350, 300)); c.tunel((350, 300), "INC", "west")
+    # bit 0: N0 = S0 xor INC  -> FF0
+    (x1, x2), sx = c.porta("XOR", (560, 120))
+    tunel_para(c, x1, "S0"); tunel_para(c, x2, "INC")
+    f0 = c.flipflop((620, 110), "FF_S0")
+    c.fio(sx, f0["D"])
+    tunel_para(c, f0["CLK"], "CLK")
+    c.tunel((640, 200), "RESET", "north"); c.fio((640, 200), f0["R"])
+    c.fio(f0["Q"], (700, 120)); c.tunel((700, 120), "S0", "west")
+    # bit 1: N1 = S1 xor (S0 . INC) -> FF1
+    (a3, a4), sa3 = c.porta("AND", (540, 300))
+    tunel_para(c, a3, "S0"); tunel_para(c, a4, "INC")
+    (x3, x4), sx3 = c.porta("XOR", (680, 260))
+    tunel_para(c, x3, "S1")
+    c.fio(sa3, (600, 300), (600, 280), x4)
+    f1 = c.flipflop((740, 250), "FF_S1")
+    c.fio(sx3, f1["D"])
+    tunel_para(c, f1["CLK"], "CLK")
+    c.tunel((760, 340), "RESET", "north"); c.fio((760, 340), f1["R"])
+    c.fio(f1["Q"], (820, 260)); c.tunel((820, 260), "S1", "west")
+    # saídas do estado atual
+    c.tunel((900, 120), "S1", "east"); c.fio((900, 120), (960, 120)); c.saida((960, 120), "S1")
+    c.tunel((900, 170), "S0", "east"); c.fio((900, 170), (960, 170)); c.saida((960, 170), "S0")
+    # decodificador 2 -> 4 (um LED por status)
+    c.texto((520, 420), "Decodificador 2->4 (status atual)", 14, True)
+    c.tunel((420, 470), "S1", "east"); c.fio((420, 470), (450, 470))
+    _, n1 = c.nao((480, 470)); c.fio(n1, (500, 470)); c.tunel((500, 470), "NS1", "west")
+    c.tunel((420, 520), "S0", "east"); c.fio((420, 520), (450, 520))
+    _, n0 = c.nao((480, 520)); c.fio(n0, (500, 520)); c.tunel((500, 520), "NS0", "west")
+    for k, (e1, e2, rot, cor) in enumerate([("NS1", "NS0", "SOLICITADO", "amarelo"), ("NS1", "S0", "ACEITO", "ciano"),
+                                            ("S1", "NS0", "ANDAMENTO", "rosa"), ("S1", "S0", "CONCLUIDO", "verde")]):
+        y = 470 + k * 80
+        (p1, p2), sp = c.porta("AND", (820, y))
+        tunel_para(c, p1, e1); tunel_para(c, p2, e2)
+        c.fio(sp, (960, y)); c.led((900, y), rot + "_LED", cor); c.saida((960, y), rot)
+    return c
+
+
+# =====================================================================
+# PAINEL — projeto completo: todos os circuitos como blocos, com chaves,
+# botões e LEDs. É o arquivo para abrir e apresentar.
+# =====================================================================
+def painel(subs):
+    c = Circuito("main")
+    c.DX = 0
+    c.texto((-20, 30), "ALTER SMART // PAINEL DA CASA INTELIGENTE  (Logisim-evolution 4.1.0)", 20, True)
+    c.texto((-20, 58), "Use a ferramenta Cutucar (mao) para mudar as entradas. Os blocos sao subcircuitos: clique 2x para ver por dentro.")
+
+    def secao(x, y0, sub, titulo, cores, entradas=None, nomes=None):
+        nomes = nomes or {}
+        c.texto((x - 80, y0 - 50), titulo, 14, True)
+        ins, outs = c.bloco((x + 220, y0), sub)
+        for (rot, bits, _), (k, p) in zip(sub.ins, ins.items()):
+            if entradas and rot in entradas:
+                entradas[rot](p)
+            else:
+                c.entrada((x, p[1]), nomes.get(rot, rot), bits); c.fio((x, p[1]), p)
+        for (rot, _, _), cor, (k, p) in zip(sub.outs, cores, outs.items()):
+            fim = (p[0] + 160, p[1])
+            c.fio(p, fim); c.led((p[0] + 90, p[1]), rot + "_LED", cor); c.saida(fim, rot)
+
+    l, a, e, t, m = subs
+    secao(200, 150, l, "1) LUZ AUTOMATICA  - sensor de presenca + escuro, ou interruptor do app", ["amarelo"])
+    secao(200, 320, a, "2) ALARME - arme e abra porta/janela ou gere movimento", ["vermelho", "amarelo"])
+    secao(200, 520, e, "3) ESTOQUE - QTD e MIN em binario (4 bits)", ["rosa", "verde"])
+    secao(200, 660, t, "4) TERMOSTATO - T e SET em graus C (5 bits)", ["ciano", "verde"], nomes={"PRESENCA": "PRESENCA_AR"})
+
+    def botao_em(nome):
+        def f(p):
+            c.botao((p[0] - 120, p[1]), nome); c.fio((p[0] - 120, p[1]), p)
+        return f
+    secao(980, 150, m, "5) STATUS DO PEDIDO - aperte AVANCAR (pulso de clock)",
+          ["verde", "verde", "amarelo", "ciano", "rosa", "verde"],
+          {"CLK": botao_em("AVANCAR"), "RESET": botao_em("RESET")})
+    return c
+
+
+def salvar_projeto(nome_arquivo, principal, blocos):
+    corpo = principal.xml() + "\n" + "\n".join(b.xml(como_bloco=True) for b in blocos)
+    (AQUI / nome_arquivo).write_text(HEADER + corpo + "\n</project>\n", encoding="utf-8")
+    print("gerado:", nome_arquivo)
 
 
 if __name__ == "__main__":
-    luz_automatica()
-    alarme()
-    estoque()
-    termostato()
-    status_pedido()
+    # arquivos separados (um circuito por arquivo)
+    for f, arq in [(luz_automatica, "01_luz_automatica.circ"), (alarme, "02_alarme_seguranca.circ"),
+                   (estoque, "03_alerta_estoque.circ"), (termostato, "04_termostato.circ"),
+                   (status_pedido, "05_status_pedido.circ"), (maquina_pedido, "06_maquina_pedido.circ")]:
+        salvar(arq, f())
+    # projeto completo: painel + todos os circuitos como subcircuitos
+    blocos = [luz_automatica("luz_automatica"), alarme("alarme"), estoque("alerta_estoque"),
+              termostato("termostato"), maquina_pedido("maquina_pedido")]
+    salvar_projeto("00_ALTER_SMART_COMPLETO.circ", painel(blocos), blocos + [status_pedido("logica_pedido")])
