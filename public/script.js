@@ -107,6 +107,7 @@ function enter() {
 function irPara(tab, foco) {
   $$('#nav button').forEach(x => { const on = x.dataset.tab === tab; x.classList.toggle('on', on); x.setAttribute('aria-selected', String(on)); });
   $$('.tab').forEach(t => t.hidden = t.id !== 'tab-' + tab);
+  window.aoMostrarAba && window.aoMostrarAba(tab);
   const sec = $('#tab-' + tab);
   const alvo = foco && (sec.querySelector(`[name="${foco}"]`) || document.getElementById(foco));
   if (alvo) { alvo.scrollIntoView({ behavior: 'smooth', block: 'center' }); if (alvo.focus) alvo.focus({ preventScroll: true }); }

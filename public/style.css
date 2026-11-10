@@ -167,3 +167,20 @@ dialog .acts{justify-content:flex-end}
 .chk-grande{display:flex!important;align-items:center;gap:10px;cursor:pointer}
 .chk-grande input{width:24px;height:24px;min-height:0;accent-color:var(--green)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ---------- Como funciona (versão simples) e rodapé ---------- */
+.como-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px}
+.card.como{--c:var(--cyan);gap:12px}
+.card.como .explica{margin:0;font-size:1.1rem;line-height:1.6;color:var(--text)}
+.pergunta{margin:6px 0 0;color:var(--yellow);font-size:1.05rem}
+.opcoes{display:flex;flex-wrap:wrap;gap:8px}
+.btn.opcao{font-size:1.1rem;min-width:120px}
+.btn.opcao[aria-pressed="true"]{background:var(--green);color:#000;text-shadow:none}
+.btn.toque{width:100%;min-height:90px;font-size:1.4rem;border-style:dashed}
+.btn.toque.tocado{background:var(--yellow);color:#000;border-color:var(--yellow);text-shadow:none}
+.resultado{margin:0;padding:12px 14px;font-size:1.2rem;border-left:4px solid var(--muted);background:#05070a}
+.resultado.r-ok{border-color:var(--green);color:var(--green)}
+.resultado.r-aviso{border-color:var(--yellow);color:var(--yellow)}
+.resultado.r-alerta{border-color:var(--pink);color:var(--pink)}
+.lista-rapida li b{margin-left:auto}
+.rodape{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:18px 24px 30px;border-top:1px dashed var(--muted);margin-top:20px}

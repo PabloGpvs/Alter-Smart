@@ -492,7 +492,9 @@
     preencherSelects(); preencherAcoes();
     if (!$('#tab-lab').hidden && atual === 'eletronica') carregarCasa();
   };
-  $$('#nav button').forEach(b => b.addEventListener('click', () => { if (b.dataset.tab === 'lab') abrirLab(atual); }));
+  // a Área técnica é aberta pelo rodapé ou pelos botões "Ver detalhes técnicos" da tela Como funciona
+  window.aoMostrarAba = tab => { if (tab === 'lab') abrirLab(atual); };
+  window.abrirAreaTecnica = sub => abrirLab(sub);
 
   montarCircuitos();
   calcCampo();
