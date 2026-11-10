@@ -2,6 +2,7 @@ const express = require('express');
 const { DatabaseSync } = require('node:sqlite');
 const crypto = require('crypto');
 const path = require('path');
+const Fisica = require('./public/fisica'); // mesmo núcleo de cálculo usado no navegador
 
 const db = new DatabaseSync(path.join(__dirname, 'database.sqlite'));
 db.exec('PRAGMA foreign_keys = ON');
@@ -29,6 +30,12 @@ CREATE TABLE IF NOT EXISTS rotinas (id INTEGER PRIMARY KEY, usuario_id INTEGER N
   nome TEXT NOT NULL, descricao TEXT);
 CREATE TABLE IF NOT EXISTS rotina_acoes (id INTEGER PRIMARY KEY, rotina_id INTEGER NOT NULL REFERENCES rotinas(id) ON DELETE CASCADE,
   dispositivo_id INTEGER NOT NULL REFERENCES dispositivos(id) ON DELETE CASCADE, acao TEXT NOT NULL);
+-- Laboratório: cada cálculo de física/eletrônica salvo pelo usuário (parâmetros e resultado em JSON)
+CREATE TABLE IF NOT EXISTS experimentos (id INTEGER PRIMARY KEY, usuario_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+  area TEXT NOT NULL CHECK (area IN ('campo_eletrico','eletrostatica','magnetismo','termodinamica','eletronica')),
+  titulo TEXT NOT NULL, ambiente_id INTEGER REFERENCES ambientes(id) ON DELETE SET NULL,
+  dispositivo_id INTEGER REFERENCES dispositivos(id) ON DELETE SET NULL,
+  parametros TEXT NOT NULL, resultado TEXT NOT NULL, data TEXT NOT NULL DEFAULT (datetime('now','localtime')));
 CREATE TABLE IF NOT EXISTS historico_transacoes (id INTEGER PRIMARY KEY, usuario_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
   tipo TEXT NOT NULL, descricao TEXT NOT NULL, data TEXT NOT NULL DEFAULT (datetime('now','localtime')));
 `);
@@ -62,6 +69,7 @@ const novaSessao = uid => {
 const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/logisim', express.static(path.join(__dirname, 'logisim'))); // download dos .circ
 const api = express.Router();
 app.use('/api', api);
 
@@ -196,6 +204,64 @@ api.delete('/pedidos/:id', (q, s) => {
   if (!r.changes) return erro(s, 404, 'Pedido não encontrado.');
   log(q.uid, 'SERVICO', `Pedido #${q.params.id} cancelado`);
   s.json({ ok: true });
+});
+
+// ---------- Laboratório de Física e Eletrônica ----------
+const NOME_AREA = { campo_eletrico: 'Campo elétrico', eletrostatica: 'Eletrostática', magnetismo: 'Magnetismo',
+  termodinamica: 'Termodinâmica', eletronica: 'Eletrônica' };
+// Só calcula (não salva) — útil para conferir valores
+api.post('/fisica/:area/calcular', (q, s) => s.json(Fisica.calcular(q.params.area, q.body.parametros || q.body)));
+// Calcula no servidor e grava o experimento (o resultado salvo nunca vem do cliente)
+api.post('/fisica/:area', (q, s) => {
+  const { area } = q.params, { titulo, parametros = {}, ambiente_id, dispositivo_id } = q.body;
+  if (!NOME_AREA[area]) return erro(s, 400, 'Área de física inválida.');
+  if (dispositivo_id && !db.prepare('SELECT 1 FROM dispositivos WHERE id=? AND usuario_id=?').get(dispositivo_id, q.uid))
+    return erro(s, 400, 'Dispositivo inválido.');
+  const resultado = Fisica.calcular(area, parametros);
+  const resumo = { ...resultado }; delete resumo.serie; // série temporal não precisa ir para o banco
+  const nome = (titulo || NOME_AREA[area]).slice(0, 80);
+  const id = db.prepare(`INSERT INTO experimentos(usuario_id,area,titulo,ambiente_id,dispositivo_id,parametros,resultado)
+    VALUES(?,?,?,?,?,?,?)`).run(q.uid, area, nome, ambiente_id || null, dispositivo_id || null,
+    JSON.stringify(parametros), JSON.stringify(resumo)).lastInsertRowid;
+  log(q.uid, 'FISICA', `${NOME_AREA[area]}: experimento "${nome}" salvo`);
+  s.status(201).json({ id, resultado });
+});
+api.get('/experimentos', (q, s) => s.json(db.prepare(`
+  SELECT e.*, a.nome ambiente, d.nome dispositivo FROM experimentos e
+  LEFT JOIN ambientes a ON a.id=e.ambiente_id LEFT JOIN dispositivos d ON d.id=e.dispositivo_id
+  WHERE e.usuario_id=? ORDER BY e.id DESC`).all(q.uid)
+  .map(e => ({ ...e, parametros: JSON.parse(e.parametros), resultado: JSON.parse(e.resultado) }))));
+api.delete('/experimentos/:id', (q, s) => {
+  const r = db.prepare('DELETE FROM experimentos WHERE id=? AND usuario_id=?').run(q.params.id, q.uid);
+  if (!r.changes) return erro(s, 404, 'Experimento não encontrado.');
+  s.json({ ok: true });
+});
+
+// Termostato: aplica o setpoint calculado ao ar-condicionado (mesma regra do circuito 04 do Logisim)
+api.post('/dispositivos/:id/termostato', (q, s) => {
+  const d = db.prepare('SELECT * FROM dispositivos WHERE id=? AND usuario_id=?').get(q.params.id, q.uid);
+  if (!d) return erro(s, 404, 'Dispositivo não encontrado.');
+  if (d.tipo !== 'ar-condicionado') return erro(s, 400, 'O termostato só vale para dispositivos do tipo ar-condicionado.');
+  const r = Fisica.calcular('eletronica', { circuito: 'termostato',
+    entradas: { T: q.body.temperatura, SET: q.body.setpoint, PRESENCA: q.body.presenca ? 1 : 0 } });
+  const estado = r.saidas.COMPRESSOR ? `ligado ${r.entradas.SET}°C` : `standby ${r.entradas.SET}°C`;
+  db.prepare('UPDATE dispositivos SET estado=? WHERE id=?').run(estado, d.id);
+  log(q.uid, 'AUTOMACAO', `Termostato ${d.nome}: T=${r.entradas.T}°C, SET=${r.entradas.SET}°C → ${estado}`);
+  s.json({ estado, ...r });
+});
+
+// Eletrônica com os dados reais da casa: entradas dos circuitos lidas do banco
+api.get('/eletronica/casa', (q, s) => {
+  const prods = db.prepare('SELECT id,nome,quantidade,quantidade_minima FROM produtos WHERE usuario_id=? ORDER BY id DESC').all(q.uid)
+    .map(p => ({ ...p, cabe_em_4_bits: p.quantidade <= 15 && p.quantidade_minima <= 15,
+      ...Fisica.calcular('eletronica', { circuito: 'alerta_estoque',
+        entradas: { QTD: Math.min(15, p.quantidade), MIN: Math.min(15, p.quantidade_minima) } }).saidas }));
+  const peds = db.prepare(`SELECT p.id, p.status, sv.titulo FROM pedidos_servicos p JOIN servicos sv ON sv.id=p.servico_id
+    WHERE p.usuario_id=? ORDER BY p.id DESC`).all(q.uid).map(p => {
+      const k = FLUXO.indexOf(p.status);
+      return { ...p, S1: k >> 1, S0: k & 1 };
+    });
+  s.json({ produtos: prods, pedidos: peds });
 });
 
 // ---------- Histórico ----------
