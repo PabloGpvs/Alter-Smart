@@ -78,7 +78,7 @@
     <button data-tab="estoque" role="tab"><span class="ic" aria-hidden="true">🧴</span>Estoque</button>
     <button data-tab="casa" role="tab"><span class="ic" aria-hidden="true">🚪</span>Minha casa</button>
     <button data-tab="servicos" role="tab"><span class="ic" aria-hidden="true">📋</span>Serviços</button>
-    <button data-tab="lab" role="tab"><span class="ic" aria-hidden="true">🔬</span>Laboratório</button>
+    <button data-tab="como" role="tab"><span class="ic" aria-hidden="true">❓</span>Como funciona</button>
     <button data-tab="historico" role="tab"><span class="ic" aria-hidden="true">📜</span>Histórico</button>
   </nav>
 
@@ -93,6 +93,7 @@
         <button class="btn atalho cyan" data-ir="pedidos" data-foco="servico_id"><span class="grande">🛠 Pedir um serviço</span><small>Limpeza, eletricista, encanador, técnico…</small></button>
         <button class="btn atalho pink" data-ir="estoque"><span class="grande">🧴 Ver o que está acabando</span><small>Produtos da casa e reposição</small></button>
         <button class="btn atalho" data-ir="automacao" data-ancora="lista-rotinas"><span class="grande">▶ Rotinas prontas</span><small>Um toque faz várias coisas, como "Vou dormir"</small></button>
+        <button class="btn atalho cyan" data-ir="como"><span class="grande">❓ Como minha casa funciona</span><small>Explicações simples, com um botão para ver acontecer</small></button>
       </div>
     </div>
     <div class="resumo-casa" id="resumo-casa"></div>
@@ -230,10 +231,20 @@
     <div id="lista-ambientes" class="grid"></div>
   </section>
 
-  <section id="tab-lab" class="tab" hidden aria-label="Laboratório">
+  <!-- ================= COMO FUNCIONA (versão simples para o morador) ================= -->
+  <section id="tab-como" class="tab" hidden aria-labelledby="t-como">
     <div class="panel">
-      <h2>Laboratório de Física &amp; Eletrônica</h2>
-      <p class="muted">&gt; A física por trás de cada dispositivo da casa. Os cálculos rodam no navegador e no servidor com o mesmo código (<code>fisica.js</code>); ao salvar, o servidor recalcula e grava no banco.</p>
+      <h2 id="t-como">Como sua casa funciona</h2>
+      <p>Cada cartão responde a uma pergunta do dia a dia. Toque no botão grande para ver acontecer. Não precisa preencher nada.</p>
+    </div>
+    <div id="como-cartoes" class="como-grid"></div>
+  </section>
+
+  <section id="tab-lab" class="tab" hidden aria-label="Área técnica">
+    <div class="panel">
+      <h2>🔧 Área técnica: Física e Eletrônica</h2>
+      <p class="muted">&gt; Parte técnica para cuidadores, técnicos e professores: as fórmulas, os gráficos e os circuitos que explicam como os aparelhos da casa funcionam com segurança. O morador usa a tela <b>❓ Como funciona</b>, que tem a versão simples.</p>
+      <div class="acts"><button class="btn ghost" data-ir="como">← Voltar para "Como funciona"</button><button class="btn ghost" data-ir="inicio">🏠 Voltar para o Início</button></div>
       <nav class="tabs sub" id="labnav">
         <button class="on" data-lab="campo">Campo elétrico</button>
         <button data-lab="eletrostatica">Eletrostática</button>
@@ -381,6 +392,10 @@
     <div id="lista-historico" class="log"></div>
   </section>
 </div>
+<footer class="rodape">
+  <button class="btn ghost sm" data-ir="lab" id="bt-tecnica">🔧 Área técnica (cuidador / professor)</button>
+  <span class="muted">Alter Smart · casa inteligente fácil de usar</span>
+</footer>
 </div>
 
 <!-- ================= JANELAS ================= -->
@@ -424,5 +439,6 @@
 <script src="fisica.js"></script>
 <script src="script.js"></script>
 <script src="lab.js"></script>
+<script src="como.js"></script>
 </body>
 </html>
