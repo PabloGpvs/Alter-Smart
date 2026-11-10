@@ -74,3 +74,45 @@ ul.acoes{margin:0;padding-left:16px;color:var(--cyan)}
   color:var(--green);opacity:0;transform:translateY(8px);transition:.25s;pointer-events:none}
 #toast.show{opacity:1;transform:none} #toast.err{border-color:var(--pink);color:var(--pink)}
 @media (max-width:600px){.logo{font-size:40px}.tab,header,.tabs{padding-left:12px;padding-right:12px}}
+
+/* ---------- Laboratório de Física & Eletrônica ---------- */
+.tabs.sub{padding:12px 0 0}
+.tabs.sub button{font-size:14px;padding:6px 12px}
+.lab{display:grid;gap:18px}
+.lab-t{margin:0 0 6px;font:400 24px var(--display);color:var(--green);text-shadow:var(--glow) var(--green);flex-basis:100%}
+.lab-ctrl{display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin-bottom:10px}
+.lab-ctrl label:first-child{width:130px}
+label.chk{display:flex;align-items:center;gap:6px;flex:0 0 auto!important}
+label.chk input{width:auto}
+label.inl{display:flex;align-items:center;gap:6px;flex:0 1 auto}
+label.inl input,label.inl select{width:auto;min-width:90px}
+canvas{display:block;width:100%;height:auto;border:1px dashed rgba(0,255,102,.35);background:#05070a;cursor:crosshair}
+.hover{margin-top:6px;font-size:13px;min-height:1.5em}
+.acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.acts>input{flex:1 1 200px;width:auto}
+dl.res{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;margin:12px 0 0}
+dl.res div{border-left:3px solid var(--cyan);padding:4px 10px;background:#05070a}
+dl.res dt{color:var(--muted);font-size:12px}
+dl.res dd{margin:0;color:var(--cyan);font-size:17px;text-shadow:var(--glow) var(--cyan)}
+dl.res dd small{color:var(--muted);text-shadow:none;font-size:12px}
+dl.res .sim{border-color:var(--green)} dl.res .sim dd{color:var(--green)}
+dl.res .nao{border-color:var(--pink)} dl.res .nao dd{color:var(--pink)}
+code{color:var(--yellow);font-family:var(--font)}
+.circ .expr{font-size:13px;line-height:1.4}
+.circ .ins{display:flex;flex-wrap:wrap;gap:6px}
+.bit{background:#000;color:var(--muted);border:1px solid var(--muted);padding:5px 10px;font:inherit;cursor:pointer}
+.bit b{color:var(--muted)}
+.bit.on{color:#000;background:var(--c,var(--green));border-color:var(--c,var(--green))} .bit.on b{color:#000}
+.outs{display:flex;flex-wrap:wrap;gap:10px}
+.led{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:13px}
+.led i{width:14px;height:14px;border-radius:50%;background:#1a1a1a;border:1px solid #333}
+.led.on{color:var(--c,var(--green))}
+.led.on i{background:var(--c,var(--green));box-shadow:0 0 10px var(--c,var(--green))}
+details summary{cursor:pointer;color:var(--cyan)}
+.tv{max-height:220px;overflow:auto;margin-top:6px}
+.tv table{border-collapse:collapse;font-size:12px}
+.tv th,.tv td{border:1px solid #1d2b24;padding:2px 7px;text-align:center}
+.tv th{color:var(--cyan)}
+.resumo{font-size:13px;line-height:1.5}
+.x-campo_eletrico{--c:var(--cyan)} .x-eletrostatica{--c:var(--yellow)} .x-magnetismo{--c:var(--pink)} .x-termodinamica{--c:var(--green)} .x-eletronica{--c:var(--cyan)}
+.log .t-FISICA{--c:var(--yellow)}

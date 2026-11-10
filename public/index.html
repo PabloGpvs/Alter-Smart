@@ -42,6 +42,7 @@
     <button data-tab="estoque">Estoque</button>
     <button data-tab="automacao">Automação</button>
     <button data-tab="casa">Casa</button>
+    <button data-tab="lab">Laboratório</button>
     <button data-tab="historico">Histórico</button>
   </nav>
 
@@ -120,11 +121,147 @@
     <div id="lista-ambientes" class="grid"></div>
   </section>
 
+
+  <section id="tab-lab" class="tab" hidden>
+    <div class="panel">
+      <h2>Laboratório de Física &amp; Eletrônica</h2>
+      <p class="muted">&gt; A física por trás de cada dispositivo da casa. Os cálculos rodam no navegador e no servidor com o mesmo código (<code>fisica.js</code>); ao salvar, o servidor recalcula e grava no banco.</p>
+      <nav class="tabs sub" id="labnav">
+        <button class="on" data-lab="campo">Campo elétrico</button>
+        <button data-lab="eletrostatica">Eletrostática</button>
+        <button data-lab="magnetismo">Magnetismo</button>
+        <button data-lab="termodinamica">Termodinâmica</button>
+        <button data-lab="eletronica">Eletrônica (Logisim)</button>
+      </nav>
+    </div>
+
+    <!-- ===== CAMPO ELÉTRICO ===== -->
+    <div class="lab" id="lab-campo">
+      <div class="panel">
+        <h3 class="lab-t">Purificador de ar eletrostático — mapa do campo elétrico</h3>
+        <p class="muted">Clique no quadro para colocar cargas · Shift+clique remove a mais próxima · botão direito fixa o ponto de medição (✛). Cada quadradinho da grade = 0,5 m.</p>
+        <div class="lab-ctrl">
+          <label>Carga (µC)<input id="ce-q" type="number" step="0.5" value="2"></label>
+          <button class="btn sm" data-preset="dipolo">Dipolo</button>
+          <button class="btn sm" data-preset="iguais">Duas positivas</button>
+          <button class="btn sm" data-preset="placas">Placas do filtro</button>
+          <button class="btn ghost sm" data-preset="limpar">Limpar</button>
+          <label class="chk"><input id="ce-linhas" type="checkbox" checked> linhas de campo</label>
+          <label class="chk"><input id="ce-equi" type="checkbox"> equipotenciais</label>
+        </div>
+        <canvas id="cv-campo" width="840" height="420"></canvas>
+        <div class="hover muted" id="ce-hover">&gt; passe o mouse no quadro</div>
+      </div>
+      <div class="panel"><dl class="res" id="res-campo"></dl>
+        <div class="acts"><input id="ce-titulo" placeholder="Título do experimento" value="Filtro eletrostático da sala"><button class="btn pink" data-salvar="campo_eletrico">Salvar experimento</button></div>
+      </div>
+    </div>
+
+    <!-- ===== ELETROSTÁTICA ===== -->
+    <div class="lab" id="lab-eletrostatica" hidden>
+      <form class="panel row lab-form" data-area="eletrostatica">
+        <h3 class="lab-t">Botão touch do painel — sensor capacitivo</h3>
+        <label>Área do eletrodo (cm²)<input name="area_cm2" type="number" step="0.1" value="1"></label>
+        <label>Espessura do vidro d (mm)<input name="dist_mm" type="number" step="0.1" value="1"></label>
+        <label>εr do vidro<input name="er" type="number" step="0.1" value="4.5"></label>
+        <label>Tensão (V)<input name="tensao" type="number" step="0.1" value="3.3"></label>
+        <label>C do dedo (pF)<input name="c_dedo_pF" type="number" step="0.5" value="5"></label>
+        <label>Limiar de detecção (%)<input name="limiar_pct" type="number" value="10"></label>
+      </form>
+      <div class="panel">
+        <canvas id="cv-eletro" width="840" height="260"></canvas>
+        <dl class="res" id="res-eletrostatica"></dl>
+        <div class="acts">
+          <label class="inl">Luz controlada pelo toque<select id="es-disp" data-tipo="luz"></select></label>
+          <button class="btn cyan" id="es-tocar">☝ Tocar no painel</button>
+          <input id="es-titulo" placeholder="Título" value="Sensor touch da sala"><button class="btn pink" data-salvar="eletrostatica">Salvar experimento</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== MAGNETISMO ===== -->
+    <div class="lab" id="lab-magnetismo" hidden>
+      <form class="panel row lab-form" data-area="magnetismo">
+        <h3 class="lab-t">Relé da automação + sensor magnético de porta</h3>
+        <label>Espiras da bobina N<input name="espiras" type="number" value="500"></label>
+        <label>Comprimento da bobina (cm)<input name="comprimento_cm" type="number" step="0.1" value="2"></label>
+        <label>Corrente (mA)<input name="corrente_mA" type="number" value="70"></label>
+        <label>Tensão da bobina (V)<input name="tensao_bobina_V" type="number" step="0.1" value="5"></label>
+        <label>μr do núcleo<input name="mu_r" type="number" value="50"></label>
+        <label>Área do núcleo (cm²)<input name="area_nucleo_cm2" type="number" step="0.1" value="1"></label>
+        <label>Força da mola (N)<input name="forca_mola_N" type="number" step="0.05" value="0.3"></label>
+        <label>Corrente no fio da tomada (A)<input name="corrente_fio_A" type="number" step="0.5" value="10"></label>
+        <label>Distância ao fio (cm)<input name="dist_fio_cm" type="number" step="0.1" value="1"></label>
+        <label>B do ímã da porta (mT)<input name="B_ima_mT" type="number" value="40"></label>
+        <label>Espiras do sensor<input name="espiras_sensor" type="number" value="200"></label>
+        <label>Tempo de abertura (ms)<input name="tempo_abertura_ms" type="number" value="100"></label>
+      </form>
+      <div class="panel">
+        <canvas id="cv-mag" width="840" height="300"></canvas>
+        <dl class="res" id="res-magnetismo"></dl>
+        <div class="acts">
+          <label class="inl">Dispositivo ligado pelo relé<select id="mg-disp"></select></label>
+          <button class="btn cyan" id="mg-acionar">⚡ Energizar bobina</button>
+          <input id="mg-titulo" placeholder="Título" value="Relé do ar-condicionado"><button class="btn pink" data-salvar="magnetismo">Salvar experimento</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TERMODINÂMICA ===== -->
+    <div class="lab" id="lab-termodinamica" hidden>
+      <form class="panel row lab-form" data-area="termodinamica">
+        <h3 class="lab-t">Climatização do ambiente — 1ª e 2ª leis</h3>
+        <label>Ambiente<select name="ambiente_id" id="td-amb" data-src-lab="ambientes"></select></label>
+        <label>Ar-condicionado<select name="dispositivo_id" id="td-disp" data-tipo="ar-condicionado"></select></label>
+        <label>Área (m²)<input name="area_m2" type="number" step="0.5" value="12"></label>
+        <label>Pé-direito (m)<input name="altura_m" type="number" step="0.1" value="2.7"></label>
+        <label>T externa (°C)<input name="t_externa" type="number" step="0.5" value="32"></label>
+        <label>T inicial do ambiente (°C)<input name="t_inicial" type="number" step="0.5" value="30"></label>
+        <label>Setpoint (°C)<input name="setpoint" type="number" min="16" max="30" value="23"></label>
+        <label>Capacidade do ar (BTU/h)<select name="btu"><option>7500</option><option selected>9000</option><option>12000</option><option>18000</option><option>24000</option></select></label>
+        <label>COP do aparelho<input name="cop" type="number" step="0.1" value="3.2"></label>
+        <label>Pessoas<input name="pessoas" type="number" value="2"></label>
+        <label>Equipamentos (W)<input name="equipamentos_W" type="number" value="150"></label>
+        <label>U das paredes (W/m²·K)<input name="u_parede" type="number" step="0.1" value="2.5"></label>
+        <label>Inércia térmica (× ar)<input name="inercia" type="number" value="5"></label>
+        <label>Simular por (h)<input name="horas" type="number" step="0.5" value="3"></label>
+        <label>Tarifa (R$/kWh)<input name="tarifa" type="number" step="0.01" value="0.9"></label>
+        <label class="chk"><input name="presenca" type="checkbox" checked> Tem gente em casa (PRESENCA)</label>
+      </form>
+      <div class="panel">
+        <canvas id="cv-termo" width="840" height="300"></canvas>
+        <dl class="res" id="res-termodinamica"></dl>
+        <div class="acts">
+          <button class="btn cyan" id="td-aplicar">❄ Aplicar setpoint no ar-condicionado</button>
+          <input id="td-titulo" placeholder="Título" value="Ar do quarto"><button class="btn pink" data-salvar="termodinamica">Salvar experimento</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== ELETRÔNICA ===== -->
+    <div class="lab" id="lab-eletronica" hidden>
+      <div class="panel">
+        <h3 class="lab-t">Circuitos digitais da casa — Logisim-evolution v4.1.0</h3>
+        <p class="muted">Cada cartão é a mesma lógica do arquivo <code>.circ</code> correspondente (pasta <code>logisim/</code>). Mude as entradas aqui ou no Logisim: as saídas batem. Abra no Logisim-evolution 4.1.0 e use a ferramenta de “cutucar” (mão) para mexer nas entradas.</p>
+      </div>
+      <div id="el-circuitos" class="grid"></div>
+      <div class="panel"><h3 class="lab-t">Os circuitos rodando com os dados reais da casa</h3>
+        <p class="muted">Estoque → circuito 03 (comparador de 4 bits) · Pedidos → circuito 05 (o botão avança o status usando N1N0 calculados pelo circuito).</p>
+        <div id="el-casa" class="grid"></div>
+      </div>
+    </div>
+
+    <div class="panel row"><h2>Experimentos salvos</h2></div>
+    <div id="lista-experimentos" class="grid"></div>
+  </section>
+
   <section id="tab-historico" class="tab" hidden>
     <div class="panel row"><h2>Log de transações</h2><button class="btn ghost" onclick="limparHist()">Limpar histórico</button></div>
     <div id="lista-historico" class="log"></div>
   </section>
 </div>
+<script src="fisica.js"></script>
 <script src="script.js"></script>
+<script src="lab.js"></script>
 </body>
 </html>
