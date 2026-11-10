@@ -19,3 +19,11 @@ O Alter Smart foi pensado para pessoas idosas e pessoas com deficiência ou como
 - Um botão grande por aparelho: **Acender/Apagar, Ligar/Desligar, Abrir/Fechar, Armar/Desarmar**
 - Janelas próprias no lugar das caixinhas do navegador: confirmar exclusão, repor com botões − e +, e adicionar ação à rotina escolhendo da lista
 - Botões de no mínimo 48 px, foco visível, navegação por teclado, link "Pular para o conteúdo", leitores de tela (ARIA) e mensagens que ficam mais tempo e podem ser fechadas
+
+## Entrega: documentação + circuitos
+- 📄 Documentação completa (Sistema, Física e Eletrônica): [docs/Alter_Smart_documentacao_completa.pdf](docs/Alter_Smart_documentacao_completa.pdf) · [Word](docs/Alter_Smart_documentacao_completa.docx)
+- 🔌 Circuitos do Logisim-evolution 4.1.0 (pasta [`logisim/`](logisim/)):
+  - **[00_ALTER_SMART_COMPLETO.circ](logisim/00_ALTER_SMART_COMPLETO.circ)**: projeto completo (abra este)
+  - [01_luz_automatica.circ](logisim/01_luz_automatica.circ) · [02_alarme_seguranca.circ](logisim/02_alarme_seguranca.circ) · [03_alerta_estoque.circ](logisim/03_alerta_estoque.circ) · [04_termostato.circ](logisim/04_termostato.circ) · [05_status_pedido.circ](logisim/05_status_pedido.circ) · [06_maquina_pedido.circ](logisim/06_maquina_pedido.circ)
+
+Para baixar um `.circ` pelo GitHub, abra o arquivo e clique em **Download raw file**. Para baixar tudo de uma vez, use **Code → Download ZIP**.
