@@ -1,10 +1,13 @@
 {
   "name": "alter-smart",
   "version": "1.0.0",
-  "description": "Delivery de servi\u00e7os + automa\u00e7\u00e3o residencial (Express + SQLite)",
+  "description": "Delivery de serviços + automação residencial (Express + SQLite)",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "db:setup": "node src/database/index.js",
+    "test": "node --test"
   },
   "dependencies": {
     "express": "^4.19.2"

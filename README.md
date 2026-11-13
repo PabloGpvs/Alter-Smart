@@ -1,10 +1,41 @@
 # Alter Smart
-Requisitos: Node.js 18+ (testado com 20/22).
+Requisitos: **Node.js 22.13 ou mais novo** (o SQLite já vem dentro do Node).
 ```
 npm install
 npm start
 ```
 Abra http://localhost:3000, crie uma conta e use o sistema. O banco `database.sqlite` é criado automaticamente.
+
+| Comando | O que faz |
+|---|---|
+| `npm start` | inicia o servidor |
+| `npm run dev` | inicia e reinicia sozinho a cada alteração no código |
+| `npm test` | roda os testes da API (banco em memória, não mexe no seu `database.sqlite`) |
+| `npm run db:setup` | só cria as tabelas e o catálogo inicial |
+
+## Arquitetura
+O back-end é organizado **por módulos** (`src/modules/auth`, `pedidos`, `dispositivos`, `laboratorio`…), e cada módulo é dividido **em camadas**:
+
+```
+routes  →  controller  →  service  →  repository  →  database (SQLite)
+(URLs)     (req/res)      (regras)    (SQL)          (conexão, schema, seed)
+```
+
+```
+server.js            só inicia (banco + porta)
+src/app.js           monta o Express
+src/routes.js        registra os módulos em /api
+src/config/          porta e caminho do banco
+src/database/        connection.js · schema.sql · seed.js
+src/middlewares/     autenticar · tratarErros · rotaNaoEncontrada
+src/modules/<nome>/  <nome>.routes.js · .controller.js · .service.js · .repository.js
+shared/fisica.js     cálculo de física usado pelo navegador E pelo servidor
+public/              index.html · css/ · js/
+tests/               testes de integração
+```
+
+- Explicação completa: [`docs/ARQUITETURA.md`](docs/ARQUITETURA.md)
+- Decisões de arquitetura (ADRs): [`docs/adr/`](docs/adr/)
 
 ## Física & Eletrônica
 Tela **❓ Como funciona** (versão simples, para o morador) e **🔧 Área técnica** (no rodapé, para cuidadores e professores) com simuladores de **campo elétrico, eletrostática, magnetismo e termodinâmica** ligados aos dispositivos da casa, e circuitos digitais para o **Logisim-evolution v4.1.0** na pasta `logisim/` (luz automática, alarme, alerta de estoque, termostato e status do pedido).
