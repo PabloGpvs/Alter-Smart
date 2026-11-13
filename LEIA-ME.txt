@@ -12,3 +12,8 @@ COMO USAR
 8) NOVO - Aba "Laboratorio": fisica (campo eletrico, eletrostatica, magnetismo, termodinamica)
    e eletronica. Os circuitos do Logisim-evolution 4.1.0 estao na pasta "logisim"
    (abra os arquivos .circ no Logisim: Arquivo > Abrir). Guia: docs\FISICA_E_ELETRONICA.md
+
+9) Organizacao do codigo: server.js so inicia; o resto fica em src\ (um modulo por assunto em
+   src\modules, cada um com routes, controller, service e repository). Explicacao em
+   docs\ARQUITETURA.md e decisoes em docs\adr\
+10) Testes automaticos: npm test

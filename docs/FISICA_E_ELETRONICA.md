@@ -10,7 +10,7 @@ A pasta
 **`logisim/`** traz os circuitos digitais que tomam as decisões da casa, feitos para o
 **Logisim-evolution v4.1.0**.
 
-O cálculo vale igual no site e no banco: `public/fisica.js` é **um único arquivo** que roda no
+O cálculo vale igual no site e no banco: `shared/fisica.js` é **um único arquivo** que roda no
 navegador (para mostrar os resultados na hora) e no servidor (que recalcula tudo antes de gravar na
 tabela `experimentos`).
 
@@ -106,20 +106,21 @@ O botão AVANCAR do painel também foi testado clicando nele dentro do próprio 
 
 ---
 
-## 3. O que mudou no código
+## 3. Onde está no código
 
-- `public/fisica.js` — núcleo de cálculo (campo elétrico, eletrostática, magnetismo, termodinâmica e
-  o espelho lógico dos 5 circuitos). Funciona no navegador e no Node.
-- `public/como.js` — tela Como funciona (versão simples para o morador).
-- `public/lab.js` — Área técnica: desenhos em canvas, gráfico da temperatura, cartões dos
+- `shared/fisica.js` — núcleo de cálculo (campo elétrico, eletrostática, magnetismo, termodinâmica e
+  o espelho lógico dos 5 circuitos). Funciona no navegador (carregado em `/shared/fisica.js`) e no Node.
+- `public/js/como.js` — tela Como funciona (versão simples para o morador).
+- `public/js/lab.js` — Área técnica: desenhos em canvas, gráfico da temperatura, cartões dos
   circuitos e integração com os dispositivos.
-- `server.js` — nova tabela `experimentos` e novas rotas:
+- `src/modules/laboratorio/` — tabela `experimentos` e as rotas:
   - `POST /api/fisica/:area` — calcula no servidor e salva o experimento
   - `POST /api/fisica/:area/calcular` — só calcula, sem salvar
   - `GET /api/experimentos` e `DELETE /api/experimentos/:id`
-  - `POST /api/dispositivos/:id/termostato` — aplica o circuito 04 ao ar-condicionado
   - `GET /api/eletronica/casa` — passa estoque e pedidos pelos circuitos 03 e 05
-  - `/logisim/*.circ` — download dos circuitos
+- `src/modules/dispositivos/` — `POST /api/dispositivos/:id/termostato` aplica o circuito 04 ao ar-condicionado
+- `/logisim/*.circ` — download dos circuitos (servido pelo `src/app.js`)
+- A organização geral do back-end está em [`ARQUITETURA.md`](ARQUITETURA.md).
 - `docs/FISICA_E_ELETRONICA.md` — este guia.
 
 > Modelos simplificados, para fins didáticos: o ar do ambiente é tratado como um único volume com
