@@ -1,6 +1,6 @@
 /*
  * Alter Smart — núcleo de Física e Eletrônica.
- * O MESMO arquivo roda no navegador (window.Fisica) e no servidor (require('./public/fisica')),
+ * O MESMO arquivo roda no navegador (window.Fisica) e no servidor (require('./shared/fisica')),
  * então o resultado mostrado na tela é exatamente o que fica salvo no banco.
  * Unidades SI em todas as contas; as entradas da interface são convertidas antes.
  */
